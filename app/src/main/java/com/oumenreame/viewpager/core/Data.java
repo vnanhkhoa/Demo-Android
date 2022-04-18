@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Data {
     public static ArrayList<Model> createModel(Context context) {
         ArrayList<Model> models = new ArrayList<>();
-        String[] arr = context.getResources().getString(R.string.nameString).split("\\.");
+        String[] arr = context.getResources().getString(R.string.name_string).split("\\.");
         for (String s:arr) {
             s = s.trim();
             String[] sArr = s.split(" ");
