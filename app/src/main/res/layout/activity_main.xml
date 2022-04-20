@@ -3,13 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_weight="1"
+        android:layout_height="match_parent">
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="15dp"
+            app:ci_drawable="@drawable/circleindicator_round"
+            app:ci_height="8dp"
+            app:ci_orientation="horizontal"
+            app:ci_width="8dp" />
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF5757"
+        app:itemIconSize="28dp"
+        app:itemIconTint="@drawable/tab_color"
+        app:itemTextColor="#FFDE59"
+        app:labelVisibilityMode="selected"
+        app:menu="@menu/bottom_menu" />
 </LinearLayout>

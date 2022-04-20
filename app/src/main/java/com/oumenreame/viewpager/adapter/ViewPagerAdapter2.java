@@ -10,21 +10,21 @@ import java.util.ArrayList;
 
 public class ViewPagerAdapter2 extends FragmentPagerAdapter {
 
-    private ArrayList<Fragment> fragments;
+    private ArrayList<Fragment> mFragments;
 
     public ViewPagerAdapter2(@NonNull FragmentManager fm, int behavior, ArrayList<Fragment> fragments) {
         super(fm, behavior);
-        this.fragments = fragments;
+        this.mFragments = fragments;
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return mFragments.size();
     }
 }

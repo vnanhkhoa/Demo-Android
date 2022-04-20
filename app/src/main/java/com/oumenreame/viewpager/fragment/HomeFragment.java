@@ -24,8 +24,8 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView ryl;
-    private ArrayList<Model> models;
+    private RecyclerView mRecycleView;
+    private ArrayList<Model> mModels;
     private static final String TAG = "Home";
 
     public HomeFragment() {
@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e(TAG, "onCreate: ");
-        models = Data.createModel(getContext());
+        mModels = Data.createModel(getContext());
     }
 
     @Override
@@ -61,9 +61,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ryl = view.findViewById(R.id.ryl);
-        ryl.setLayoutManager(new LinearLayoutManager(getContext()));
-        ryl.setAdapter(new RecyclerviewAdapter(getContext(),models));
+        mRecycleView = view.findViewById(R.id.recycleView);
+        mRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycleView.setAdapter(new RecyclerviewAdapter(getContext(),mModels));
         Log.e(TAG, "onViewCreated: ");
     }
 

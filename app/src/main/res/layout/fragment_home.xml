@@ -7,13 +7,13 @@
     android:gravity="center"
     tools:context=".fragment.HomeFragment">
 
-    <EditText
-        android:layout_margin="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+<!--    <EditText-->
+<!--        android:layout_margin="15dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ryl"
+        android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

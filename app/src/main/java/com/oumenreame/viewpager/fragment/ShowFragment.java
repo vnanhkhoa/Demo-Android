@@ -26,8 +26,8 @@ import java.util.ArrayList;
 
 public class ShowFragment extends Fragment {
 
-    ListView list;
-    ArrayList<Model> models;
+    ListView mList;
+    ArrayList<Model> mModels;
     private static final String TAG = "Show";
 
 
@@ -38,7 +38,7 @@ public class ShowFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e(TAG, "onCreate: ");
-        models = Data.createModel(getContext());
+        mModels = Data.createModel(getContext());
     }
 
     @Override
@@ -62,9 +62,9 @@ public class ShowFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        list = view.findViewById(R.id.list);
-        ListViewAdapter listViewAdapter = new ListViewAdapter(getActivity(),R.layout.item,models);
-        list.setAdapter(listViewAdapter);
+        mList = view.findViewById(R.id.list);
+        ListViewAdapter listViewAdapter = new ListViewAdapter(getActivity(),R.layout.item,mModels);
+        mList.setAdapter(listViewAdapter);
         Log.e(TAG, "onViewCreated: ");
     }
 

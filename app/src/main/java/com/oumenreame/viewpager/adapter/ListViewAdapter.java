@@ -4,6 +4,7 @@ import static com.oumenreame.viewpager.core.Data.dpToPx;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class ListViewAdapter extends ArrayAdapter<Model> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        Log.e("LOI", "getView: "+position);
         View item = LayoutInflater.from(this.context).inflate(this.resource,parent,false);
 
         TextView txtTitle = item.findViewById(R.id.txtTitle);
