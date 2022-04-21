@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.oumenreame.viewpager.MainActivity3;
 import com.oumenreame.viewpager.R;
+import com.oumenreame.viewpager.callback.AdapterCallback;
 import com.oumenreame.viewpager.model.Model;
 
 import java.util.ArrayList;
@@ -22,6 +23,11 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     private Context context;
     private ArrayList<Model> models;
     private final String TAG = "LOI";
+    private AdapterCallback mCallback;
+
+    public void setCallback(AdapterCallback callback) {
+        this.mCallback = callback;
+    }
 
     public RecyclerviewAdapter(Context context, ArrayList<Model> models) {
         this.context = context;
@@ -44,14 +50,15 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
         holder.txtTitle.setText(model.getTitle());
         holder.txtDetail.setText(model.getDetail());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, MainActivity3.class);
-                intent.putExtra("Model",model);
-                context.startActivity(intent);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, MainActivity3.class);
+//                intent.putExtra("Model",model);
+//                context.startActivity(intent);
+//            }
+//        });
+        holder.itemView.setOnClickListener(view -> mCallback.itemRecyclerViewAdapter(model));
     }
 
     @Override

@@ -2,10 +2,13 @@ package com.oumenreame.viewpager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.Manifest;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -22,6 +25,7 @@ import me.relex.circleindicator.CircleIndicator3;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
     ViewPager2 mViewPager;
     ArrayList<Fragment> mFragments;
     BottomNavigationView mBottomNavigationbar;
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                EXTERNAL_STORAGE_PERMISSION_CODE);
 
         mBottomNavigationbar = findViewById(R.id.bottomNavigationbar);
         mViewPager = findViewById(R.id.viewPager);
@@ -81,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
         CircleIndicator3 indicator = findViewById(R.id.indicator);
         indicator.setViewPager(mViewPager);
+
+        Log.e("Main", "onCreate: ");
     }
 
     @Override

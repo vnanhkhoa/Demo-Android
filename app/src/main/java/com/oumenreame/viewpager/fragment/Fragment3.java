@@ -11,12 +11,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.oumenreame.viewpager.R;
+import com.oumenreame.viewpager.task.DownLoad;
 
 public class Fragment3 extends Fragment {
 
     private static final String TAG = "3";
+    private EditText mEdtUrl;
+    private Button mBtnDownload;
+    private ProgressBar progressBar;
+    private TextView mTvProgress;
 
 
     public Fragment3() {
@@ -47,12 +57,25 @@ public class Fragment3 extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.e(TAG, "onSaveInstanceState: ");
+        outState.putInt("Progess",progressBar.getProgress());
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.e(TAG, "onViewCreated: ");
+
+        mEdtUrl = view.findViewById(R.id.edtUrl);
+        String url = "http://54.39.180.249/";
+        mEdtUrl.setText(url);
+        mBtnDownload = view.findViewById(R.id.btnDownload);
+        mBtnDownload.setOnClickListener(view1 -> {
+            DownloadVideo downloadVideo = new DownloadVideo(view);
+            downloadVideo.execute(url);
+        });
+        mTvProgress = view.findViewById(R.id.tvProgress);
+        progressBar = view.findViewById(R.id.progressBar);
+
     }
 
     @Override
@@ -100,6 +123,41 @@ public class Fragment3 extends Fragment {
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
+
         Log.e(TAG, "onViewStateRestored: ");
+    }
+
+    class DownloadVideo extends DownLoad {
+
+        View view;
+
+        public DownloadVideo(View view) {
+            this.view = view;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setProgress(0);
+            mTvProgress.setText("0%");
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (aBoolean) {
+                Snackbar.make(view,"DownLoad Successful", Snackbar.LENGTH_LONG).show();
+            } else {
+                Snackbar.make(view,"DownLoad Failed", Snackbar.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            progressBar.setMax(100);
+            progressBar.setProgress(values[0]);
+            mTvProgress.setText(values[0]+"%");
+        }
     }
 }

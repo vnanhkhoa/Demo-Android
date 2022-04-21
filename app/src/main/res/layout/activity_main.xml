@@ -9,13 +9,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="match_parent">
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator"
@@ -29,14 +24,22 @@
             app:ci_width="8dp" />
     </FrameLayout>
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FF5757"
+        android:elevation="20dp"
+        app:backgroundTint="#FF5757"
         app:itemIconSize="28dp"
         app:itemIconTint="@drawable/tab_color"
         app:itemTextColor="#FFDE59"
+        android:translationZ="0dp"
         app:labelVisibilityMode="selected"
         app:menu="@menu/bottom_menu" />
 </LinearLayout>

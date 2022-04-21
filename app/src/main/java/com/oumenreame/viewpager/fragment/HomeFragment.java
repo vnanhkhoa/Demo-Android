@@ -1,6 +1,7 @@
 package com.oumenreame.viewpager.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,8 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.oumenreame.viewpager.MainActivity3;
 import com.oumenreame.viewpager.R;
 import com.oumenreame.viewpager.adapter.RecyclerviewAdapter;
+import com.oumenreame.viewpager.callback.AdapterCallback;
 import com.oumenreame.viewpager.core.Data;
 import com.oumenreame.viewpager.model.Model;
 
@@ -27,6 +30,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView mRecycleView;
     private ArrayList<Model> mModels;
     private static final String TAG = "Home";
+    private AdapterCallback mCallback;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -37,6 +41,11 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.e(TAG, "onCreate: ");
         mModels = Data.createModel(getContext());
+        mCallback = model -> {
+            Intent intent = new Intent(getContext(), MainActivity3.class);
+            intent.putExtra("Model",model);
+            getContext().startActivity(intent);
+        };
     }
 
     @Override
@@ -63,7 +72,9 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mRecycleView = view.findViewById(R.id.recycleView);
         mRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecycleView.setAdapter(new RecyclerviewAdapter(getContext(),mModels));
+        RecyclerviewAdapter recyclerviewAdapter = new RecyclerviewAdapter(getContext(),mModels);
+        recyclerviewAdapter.setCallback(mCallback);
+        mRecycleView.setAdapter(recyclerviewAdapter);
         Log.e(TAG, "onViewCreated: ");
     }
 
