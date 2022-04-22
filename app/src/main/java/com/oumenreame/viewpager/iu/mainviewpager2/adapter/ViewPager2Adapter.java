@@ -1,20 +1,17 @@
-package com.oumenreame.viewpager.adapter;
+package com.oumenreame.viewpager.iu.mainviewpager2.adapter;
 
-import android.app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 
-public class ViewPagerAdapter extends FragmentStateAdapter {
-    private ArrayList<Fragment> fragments;
+public class ViewPager2Adapter extends FragmentStateAdapter {
+    private final ArrayList<Fragment> fragments;
 
-    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, ArrayList<Fragment> fragments) {
+    public ViewPager2Adapter(@NonNull FragmentActivity fragmentActivity, ArrayList<Fragment> fragments) {
         super(fragmentActivity);
         this.fragments = fragments;
     }

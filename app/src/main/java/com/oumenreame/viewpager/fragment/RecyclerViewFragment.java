@@ -1,52 +1,63 @@
 package com.oumenreame.viewpager.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.oumenreame.viewpager.iu.detailmodel.DetailModelActivity;
 import com.oumenreame.viewpager.R;
-import com.oumenreame.viewpager.task.DownLoad;
+import com.oumenreame.viewpager.adapter.RecyclerviewAdapter;
+import com.oumenreame.viewpager.callback.AdapterCallback;
+import com.oumenreame.viewpager.core.Constant;
+import com.oumenreame.viewpager.core.Data;
+import com.oumenreame.viewpager.model.Model;
 
-public class Fragment3 extends Fragment {
-
-    private static final String TAG = "3";
-    private EditText mEdtUrl;
-    private Button mBtnDownload;
-    private ProgressBar progressBar;
-    private TextView mTvProgress;
+import java.util.ArrayList;
+import java.util.Objects;
 
 
-    public Fragment3() {
+public class RecyclerViewFragment extends Fragment {
+
+    private ArrayList<Model> mModels;
+    private static final String TAG = "Home";
+    private AdapterCallback mCallback;
+
+    public RecyclerViewFragment() {
         // Required empty public constructor
     }
 
-
+    @SuppressLint("UseRequireInsteadOfGet")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e(TAG, "onCreate: ");
+        mModels = Data.createModel(Objects.requireNonNull(getContext()));
+        mCallback = model -> {
+            Intent intent = new Intent(getContext(), DetailModelActivity.class);
+            intent.putExtra(Constant.MODEL,model);
+            getContext().startActivity(intent);
+        };
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Log.e(TAG, "onCreateView: ");
-        return inflater.inflate(R.layout.fragment_3, container, false);
+
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -57,25 +68,16 @@ public class Fragment3 extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.e(TAG, "onSaveInstanceState: ");
-        outState.putInt("Progess",progressBar.getProgress());
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        RecyclerView mRecycleView = view.findViewById(R.id.recycleView);
+        mRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerviewAdapter recyclerviewAdapter = new RecyclerviewAdapter(getContext(),mModels,mCallback);
+        mRecycleView.setAdapter(recyclerviewAdapter);
         Log.e(TAG, "onViewCreated: ");
-
-        mEdtUrl = view.findViewById(R.id.edtUrl);
-        String url = "http://54.39.180.249/";
-        mEdtUrl.setText(url);
-        mBtnDownload = view.findViewById(R.id.btnDownload);
-        mBtnDownload.setOnClickListener(view1 -> {
-            DownloadVideo downloadVideo = new DownloadVideo(view);
-            downloadVideo.execute(url);
-        });
-        mTvProgress = view.findViewById(R.id.tvProgress);
-        progressBar = view.findViewById(R.id.progressBar);
-
     }
 
     @Override
@@ -123,41 +125,6 @@ public class Fragment3 extends Fragment {
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-
         Log.e(TAG, "onViewStateRestored: ");
-    }
-
-    class DownloadVideo extends DownLoad {
-
-        View view;
-
-        public DownloadVideo(View view) {
-            this.view = view;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setProgress(0);
-            mTvProgress.setText("0%");
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-            if (aBoolean) {
-                Snackbar.make(view,"DownLoad Successful", Snackbar.LENGTH_LONG).show();
-            } else {
-                Snackbar.make(view,"DownLoad Failed", Snackbar.LENGTH_LONG).show();
-            }
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            progressBar.setMax(100);
-            progressBar.setProgress(values[0]);
-            mTvProgress.setText(values[0]+"%");
-        }
     }
 }

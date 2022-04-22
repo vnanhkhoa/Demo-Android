@@ -13,9 +13,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class DownLoad extends AsyncTask<String,Integer,Boolean> {
 
+    public DownLoad() {
+
+    }
 
     @Override
     protected void onPreExecute() {
@@ -35,6 +39,7 @@ public class DownLoad extends AsyncTask<String,Integer,Boolean> {
     @Override
     protected Boolean doInBackground(@NonNull String... strings) {
         String urlVideo = strings[0];
+        String fileName = strings[1];
         try {
             URL url=new URL(urlVideo);
             HttpURLConnection connection= (HttpURLConnection) url.openConnection();
@@ -43,14 +48,14 @@ public class DownLoad extends AsyncTask<String,Integer,Boolean> {
             int leng = connection.getContentLength();
 
             InputStream is= connection.getInputStream();
-            InputStreamReader isr=new InputStreamReader(is,"UTF-8");
+            InputStreamReader isr=new InputStreamReader(is, StandardCharsets.UTF_8);
             BufferedReader br=new BufferedReader(isr);
             File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-            file = new File(file,"video.mp4");
+            file = new File(file,fileName);
 
             FileOutputStream output = new FileOutputStream(file);
 
-            byte data[] = new byte[4096];
+            byte[] data = new byte[4096];
             long total = 0;
             int count;
             while ((count = is.read(data)) != -1) {

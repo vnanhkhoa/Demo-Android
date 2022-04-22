@@ -1,24 +1,22 @@
-package com.oumenreame.viewpager;
+package com.oumenreame.viewpager.iu.mainviewpager;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
-import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 
-import com.oumenreame.viewpager.adapter.ViewPagerAdapter;
-import com.oumenreame.viewpager.adapter.ViewPagerAdapter2;
-import com.oumenreame.viewpager.fragment.Fragment3;
-import com.oumenreame.viewpager.fragment.HomeFragment;
-import com.oumenreame.viewpager.fragment.ShowFragment;
+import com.oumenreame.viewpager.R;
+import com.oumenreame.viewpager.fragment.DownloadFragment;
+import com.oumenreame.viewpager.fragment.RecyclerViewFragment;
+import com.oumenreame.viewpager.fragment.ListViewFragment;
+import com.oumenreame.viewpager.iu.mainviewpager.adapter.ViewPagerAdapter;
 
 import java.util.ArrayList;
 
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivityViewPager extends AppCompatActivity {
     ViewPager vpg;
 
     ArrayList<Fragment> fragments;
@@ -31,11 +29,11 @@ public class MainActivity2 extends AppCompatActivity {
         vpg = findViewById(R.id.vpg);
 
         fragments = new ArrayList<>();
-        fragments.add(new HomeFragment());
-        fragments.add(new ShowFragment());
-        fragments.add(new Fragment3());
+        fragments.add(new RecyclerViewFragment());
+        fragments.add(new ListViewFragment());
+        fragments.add(new DownloadFragment());
 
-        ViewPagerAdapter2 viewPagerAdapter = new ViewPagerAdapter2(
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),
                 BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
                 fragments);

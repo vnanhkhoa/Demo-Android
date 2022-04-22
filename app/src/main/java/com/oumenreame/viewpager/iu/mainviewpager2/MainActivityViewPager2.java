@@ -1,35 +1,34 @@
-package com.oumenreame.viewpager;
+package com.oumenreame.viewpager.iu.mainviewpager2;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.oumenreame.viewpager.adapter.ViewPagerAdapter;
-import com.oumenreame.viewpager.fragment.Fragment3;
-import com.oumenreame.viewpager.fragment.HomeFragment;
-import com.oumenreame.viewpager.fragment.ShowFragment;
+import com.oumenreame.viewpager.R;
+import com.oumenreame.viewpager.iu.mainviewpager2.adapter.ViewPager2Adapter;
+import com.oumenreame.viewpager.fragment.DownloadFragment;
+import com.oumenreame.viewpager.fragment.RecyclerViewFragment;
+import com.oumenreame.viewpager.fragment.ListViewFragment;
 
 import java.util.ArrayList;
 
 import me.relex.circleindicator.CircleIndicator3;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityViewPager2 extends AppCompatActivity {
 
     private static final int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
     ViewPager2 mViewPager;
     ArrayList<Fragment> mFragments;
     BottomNavigationView mBottomNavigationbar;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,29 +41,25 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setOffscreenPageLimit(3);
 
         mFragments = new ArrayList<>();
-        mFragments.add(new HomeFragment());
-        mFragments.add(new ShowFragment());
-        mFragments.add(new Fragment3());
+        mFragments.add(new RecyclerViewFragment());
+        mFragments.add(new ListViewFragment());
+        mFragments.add(new DownloadFragment());
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(MainActivity.this, mFragments);
+        ViewPager2Adapter viewPagerAdapter = new ViewPager2Adapter(MainActivityViewPager2.this, mFragments);
         mViewPager.setAdapter(viewPagerAdapter);
-//        mViewPager
-        mBottomNavigationbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.home:
-                        mViewPager.setCurrentItem(0);
-                        break;
-                    case R.id.show:
-                        mViewPager.setCurrentItem(1);
-                        break;
-                    case R.id.fragmet3:
-                        mViewPager.setCurrentItem(2);
-                        break;
-                }
-                return false;
+        mBottomNavigationbar.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.home:
+                    mViewPager.setCurrentItem(0);
+                    break;
+                case R.id.show:
+                    mViewPager.setCurrentItem(1);
+                    break;
+                case R.id.fragmet3:
+                    mViewPager.setCurrentItem(2);
+                    break;
             }
+            return false;
         });
 
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

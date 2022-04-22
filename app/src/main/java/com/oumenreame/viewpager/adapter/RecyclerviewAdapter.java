@@ -1,8 +1,6 @@
 package com.oumenreame.viewpager.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.oumenreame.viewpager.MainActivity3;
 import com.oumenreame.viewpager.R;
 import com.oumenreame.viewpager.callback.AdapterCallback;
 import com.oumenreame.viewpager.model.Model;
@@ -20,18 +17,14 @@ import java.util.ArrayList;
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder>{
 
-    private Context context;
-    private ArrayList<Model> models;
-    private final String TAG = "LOI";
-    private AdapterCallback mCallback;
+    private final Context context;
+    private final ArrayList<Model> models;
+    private final AdapterCallback mCallback;
 
-    public void setCallback(AdapterCallback callback) {
-        this.mCallback = callback;
-    }
-
-    public RecyclerviewAdapter(Context context, ArrayList<Model> models) {
+    public RecyclerviewAdapter(Context context, ArrayList<Model> models, AdapterCallback mCallback) {
         this.context = context;
         this.models = models;
+        this.mCallback = mCallback;
     }
 
     @NonNull
@@ -39,25 +32,15 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item,parent,false);
 
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        Log.e(TAG, "onBindViewHolder: " + position );
         Model model = models.get(position);
 
         holder.txtTitle.setText(model.getTitle());
         holder.txtDetail.setText(model.getDetail());
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(context, MainActivity3.class);
-//                intent.putExtra("Model",model);
-//                context.startActivity(intent);
-//            }
-//        });
         holder.itemView.setOnClickListener(view -> mCallback.itemRecyclerViewAdapter(model));
     }
 
@@ -66,7 +49,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         return models.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtTitle;
         TextView txtDetail;

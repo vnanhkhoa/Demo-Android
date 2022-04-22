@@ -1,14 +1,11 @@
 package com.oumenreame.viewpager.fragment;
 
-import static com.oumenreame.viewpager.core.Data.dpToPx;
-
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,20 +15,19 @@ import android.widget.ListView;
 
 import com.oumenreame.viewpager.R;
 import com.oumenreame.viewpager.adapter.ListViewAdapter;
-import com.oumenreame.viewpager.adapter.RecyclerviewAdapter;
 import com.oumenreame.viewpager.core.Data;
 import com.oumenreame.viewpager.model.Model;
 
 import java.util.ArrayList;
 
-public class ShowFragment extends Fragment {
+public class ListViewFragment extends Fragment {
 
     ListView mList;
     ArrayList<Model> mModels;
     private static final String TAG = "Show";
 
 
-    public ShowFragment() {
+    public ListViewFragment() {
     }
 
     @Override

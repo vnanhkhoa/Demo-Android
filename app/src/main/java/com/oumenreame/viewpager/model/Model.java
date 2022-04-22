@@ -10,11 +10,6 @@ public class Model implements Serializable {
     public Model() {
     }
 
-    public Model(String title, String detail) {
-        this.title = title;
-        this.detail = detail;
-    }
-
     public String getTitle() {
         return title;
     }
