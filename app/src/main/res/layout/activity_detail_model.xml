@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
-    tools:context=".iu.detailmodel.DetailModelActivity">
+    tools:context=".ui.detailmodel.DetailModelActivity">
 
     <TextView
         android:id="@+id/tvTitle"

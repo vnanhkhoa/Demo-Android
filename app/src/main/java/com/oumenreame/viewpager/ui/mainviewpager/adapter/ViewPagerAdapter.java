@@ -1,4 +1,4 @@
-package com.oumenreame.viewpager.iu.mainviewpager.adapter;
+package com.oumenreame.viewpager.ui.mainviewpager.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

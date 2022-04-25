@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.oumenreame.viewpager.iu.detailmodel.DetailModelActivity;
+import com.oumenreame.viewpager.ui.detailmodel.DetailModelActivity;
 import com.oumenreame.viewpager.R;
 import com.oumenreame.viewpager.adapter.RecyclerviewAdapter;
 import com.oumenreame.viewpager.callback.AdapterCallback;
@@ -55,7 +55,7 @@ public class RecyclerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
     @Override

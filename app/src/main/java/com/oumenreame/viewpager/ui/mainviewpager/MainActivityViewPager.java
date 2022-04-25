@@ -1,4 +1,4 @@
-package com.oumenreame.viewpager.iu.mainviewpager;
+package com.oumenreame.viewpager.ui.mainviewpager;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 
@@ -12,7 +12,7 @@ import com.oumenreame.viewpager.R;
 import com.oumenreame.viewpager.fragment.DownloadFragment;
 import com.oumenreame.viewpager.fragment.RecyclerViewFragment;
 import com.oumenreame.viewpager.fragment.ListViewFragment;
-import com.oumenreame.viewpager.iu.mainviewpager.adapter.ViewPagerAdapter;
+import com.oumenreame.viewpager.ui.mainviewpager.adapter.ViewPagerAdapter;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class MainActivityViewPager extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main_viewpager);
 
         vpg = findViewById(R.id.vpg);
 

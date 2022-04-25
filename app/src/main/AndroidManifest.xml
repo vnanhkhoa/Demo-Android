@@ -14,15 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ViewPager">
         <activity
-            android:name=".iu.detailmodel.DetailModelActivity"
+            android:name=".ui.detailmodel.DetailModelActivity"
             android:exported="false" />
         <activity
-            android:name=".iu.mainviewpager.MainActivityViewPager"
+            android:name=".ui.mainviewpager.MainActivityViewPager"
             android:exported="false">
 
         </activity>
         <activity
-            android:name=".iu.mainviewpager2.MainActivityViewPager2"
+            android:name=".ui.mainviewpager2.MainActivityViewPager2"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true">
             <intent-filter>

@@ -1,4 +1,4 @@
-package com.oumenreame.viewpager.iu.mainviewpager2;
+package com.oumenreame.viewpager.ui.mainviewpager2;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.oumenreame.viewpager.R;
-import com.oumenreame.viewpager.iu.mainviewpager2.adapter.ViewPager2Adapter;
+import com.oumenreame.viewpager.ui.mainviewpager2.adapter.ViewPager2Adapter;
 import com.oumenreame.viewpager.fragment.DownloadFragment;
 import com.oumenreame.viewpager.fragment.RecyclerViewFragment;
 import com.oumenreame.viewpager.fragment.ListViewFragment;
@@ -32,7 +32,7 @@ public class MainActivityViewPager2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_viewpager2);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 EXTERNAL_STORAGE_PERMISSION_CODE);
 

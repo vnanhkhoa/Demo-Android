@@ -2,6 +2,7 @@ package com.oumenreame.viewpager.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,8 +25,8 @@ import com.oumenreame.viewpager.task.DownLoad;
 public class DownloadFragment extends Fragment {
 
     private static final String TAG = "3";
-    private ProgressBar progressBar;
-    private TextView mTvProgress;
+    private ProgressBar progressBar,progressBar1;
+    private TextView mTvProgress,mTvProgress1;
     final String M_PROGRESS = "Progress";
 
 
@@ -45,7 +46,7 @@ public class DownloadFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.e(TAG, "onCreateView: ");
-        return inflater.inflate(R.layout.fragment_3, container, false);
+        return inflater.inflate(R.layout.fragment_download, container, false);
     }
     @Override
     public void onAttach(@NonNull Context context) {
@@ -70,11 +71,16 @@ public class DownloadFragment extends Fragment {
         mEdtUrl.setText(url);
         Button mBtnDownload = view.findViewById(R.id.btnDownload);
         mBtnDownload.setOnClickListener(view1 -> {
-            DownloadVideo downloadVideo = new DownloadVideo(view);
+            DownloadVideo downloadVideo = new DownloadVideo(view,progressBar,mTvProgress);
             downloadVideo.execute(url,"video.mp4");
+
+            DownloadVideo downloadVideo1 = new DownloadVideo(view,progressBar1,mTvProgress1);
+            downloadVideo1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url,"video1.mp4");
         });
         mTvProgress = view.findViewById(R.id.tvProgress);
         progressBar = view.findViewById(R.id.progressBar);
+        mTvProgress1 = view.findViewById(R.id.tvProgress1);
+        progressBar1 = view.findViewById(R.id.progressBar1);
 
     }
 
@@ -131,9 +137,13 @@ public class DownloadFragment extends Fragment {
     class DownloadVideo extends DownLoad {
 
         View view;
+        ProgressBar progressBar;
+        TextView tv;
 
-        public DownloadVideo(View view) {
+        public DownloadVideo(View view, ProgressBar progressBar, TextView tv) {
             this.view = view;
+            this.progressBar = progressBar;
+            this.tv = tv;
         }
 
         @Override
@@ -159,7 +169,7 @@ public class DownloadFragment extends Fragment {
             super.onProgressUpdate(values);
             progressBar.setMax(100);
             progressBar.setProgress(values[0]);
-            mTvProgress.setText(values[0]+"%");
+            tv.setText(values[0]+"%");
         }
     }
 }

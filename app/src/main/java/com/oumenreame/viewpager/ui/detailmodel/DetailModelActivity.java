@@ -1,4 +1,4 @@
-package com.oumenreame.viewpager.iu.detailmodel;
+package com.oumenreame.viewpager.ui.detailmodel;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +23,7 @@ public class DetailModelActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.activity_detail_model);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         mTvTitle = findViewById(R.id.tvTitle);

@@ -1,6 +1,7 @@
 package com.oumenreame.viewpager.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,8 +38,8 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Log.e("LOI", "onBindViewHolder: "+position);
         Model model = models.get(position);
-
         holder.txtTitle.setText(model.getTitle());
         holder.txtDetail.setText(model.getDetail());
         holder.itemView.setOnClickListener(view -> mCallback.itemRecyclerViewAdapter(model));
