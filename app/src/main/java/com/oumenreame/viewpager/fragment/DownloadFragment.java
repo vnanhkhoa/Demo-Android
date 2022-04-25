@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +26,12 @@ import com.oumenreame.viewpager.task.DownLoad;
 public class DownloadFragment extends Fragment {
 
     private static final String TAG = "3";
-    private ProgressBar progressBar,progressBar1;
-    private TextView mTvProgress,mTvProgress1;
+    private ProgressBar progressBar2;
+    private TextView mTvProgress2;
+    private ProgressBar progressBar;
+    private TextView mTvProgress;
+    private ProgressBar progressBar1;
+    private TextView mTvProgress1;
     final String M_PROGRESS = "Progress";
 
 
@@ -70,18 +75,30 @@ public class DownloadFragment extends Fragment {
         String url = "http://54.39.180.249/";
         mEdtUrl.setText(url);
         Button mBtnDownload = view.findViewById(R.id.btnDownload);
-        mBtnDownload.setOnClickListener(view1 -> {
-            DownloadVideo downloadVideo = new DownloadVideo(view,progressBar,mTvProgress);
-            downloadVideo.execute(url,"video.mp4");
-
-            DownloadVideo downloadVideo1 = new DownloadVideo(view,progressBar1,mTvProgress1);
-            downloadVideo1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url,"video1.mp4");
-        });
+        mTvProgress2 = view.findViewById(R.id.tvProgress2);
+        progressBar2 = view.findViewById(R.id.progressBar2);
         mTvProgress = view.findViewById(R.id.tvProgress);
         progressBar = view.findViewById(R.id.progressBar);
         mTvProgress1 = view.findViewById(R.id.tvProgress1);
         progressBar1 = view.findViewById(R.id.progressBar1);
 
+        mBtnDownload.setOnClickListener(view1 -> {
+            DownloadVideo downloadVideo2 = new DownloadVideo(view,progressBar,mTvProgress,1);
+            downloadVideo2.execute(url,"video2.mp4");
+
+            Log.e(TAG, "onViewCreated: "+1);
+
+            DownloadVideo downloadVideo = new DownloadVideo(view,progressBar1,mTvProgress1,2);
+            downloadVideo.execute(url,"video.mp4");
+
+            Log.e(TAG, "onViewCreated: "+2);
+
+            DownloadVideo downloadVideo1 = new DownloadVideo(view,progressBar2,mTvProgress2,3);
+            downloadVideo1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url,"video1.mp4");
+
+            Log.e(TAG, "onViewCreated: "+3);
+        });
+//        Handler handler = new Handler();
     }
 
     @Override
@@ -139,16 +156,21 @@ public class DownloadFragment extends Fragment {
         View view;
         ProgressBar progressBar;
         TextView tv;
+        int a;
 
-        public DownloadVideo(View view, ProgressBar progressBar, TextView tv) {
+        public DownloadVideo(View view, ProgressBar progressBar, TextView tv,int a) {
             this.view = view;
             this.progressBar = progressBar;
             this.tv = tv;
+            this.a = a;
+
+            Log.e(TAG, "DownloadVideo: "+a);
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            Log.e(TAG, "onPreExecute: "+a);
             progressBar.setProgress(0);
             mTvProgress.setText("0%");
         }
@@ -167,7 +189,8 @@ public class DownloadFragment extends Fragment {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            progressBar.setMax(100);
+            Log.e(TAG, "onProgressUpdate: "+a);
+            progressBar.setMax(20);
             progressBar.setProgress(values[0]);
             tv.setText(values[0]+"%");
         }

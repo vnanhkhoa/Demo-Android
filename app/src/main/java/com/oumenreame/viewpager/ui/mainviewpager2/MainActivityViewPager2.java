@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.oumenreame.viewpager.R;
+import com.oumenreame.viewpager.fragment.HandlerFragment;
 import com.oumenreame.viewpager.ui.mainviewpager2.adapter.ViewPager2Adapter;
 import com.oumenreame.viewpager.fragment.DownloadFragment;
 import com.oumenreame.viewpager.fragment.RecyclerViewFragment;
@@ -44,6 +45,7 @@ public class MainActivityViewPager2 extends AppCompatActivity {
         mFragments.add(new RecyclerViewFragment());
         mFragments.add(new ListViewFragment());
         mFragments.add(new DownloadFragment());
+        mFragments.add(new HandlerFragment());
 
         ViewPager2Adapter viewPagerAdapter = new ViewPager2Adapter(MainActivityViewPager2.this, mFragments);
         mViewPager.setAdapter(viewPagerAdapter);
@@ -57,6 +59,9 @@ public class MainActivityViewPager2 extends AppCompatActivity {
                     break;
                 case R.id.fragmet3:
                     mViewPager.setCurrentItem(2);
+                    break;
+                case R.id.handler:
+                    mViewPager.setCurrentItem(3);
                     break;
             }
             return false;
@@ -75,6 +80,9 @@ public class MainActivityViewPager2 extends AppCompatActivity {
                         break;
                     case 2:
                         mBottomNavigationbar.getMenu().findItem(R.id.fragmet3).setChecked(true);
+                        break;
+                    case 3:
+                        mBottomNavigationbar.getMenu().findItem(R.id.handler).setChecked(true);
                         break;
                 }
             }
