@@ -15,6 +15,7 @@
         android:theme="@style/Theme.ViewPager">
         <activity
             android:name=".ui.detailmodel.DetailModelActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
             android:exported="false" />
         <activity
             android:name=".ui.mainviewpager.MainActivityViewPager"
