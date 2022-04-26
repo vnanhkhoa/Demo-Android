@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.mainviewpager2.MainActivityViewPager2">
+    tools:context=".ui.main.MainActivityViewPager2">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -15,31 +15,31 @@
         <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/h_indicator"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="@dimen/mb_indicator"
             app:ci_drawable="@drawable/circleindicator_round"
-            app:ci_height="8dp"
+            app:ci_height="@dimen/wh_ci_indicator"
             app:ci_orientation="horizontal"
-            app:ci_width="8dp" />
+            app:ci_width="@dimen/wh_ci_indicator" />
     </FrameLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_weight="1"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:ignore="InefficientWeight" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="20dp"
+        android:elevation="@dimen/elevation_bottom_navigation"
         app:backgroundTint="#FF5757"
-        app:itemIconSize="28dp"
+        app:itemIconSize="@dimen/item_icon_size"
         app:itemIconTint="@drawable/tab_color"
         app:itemTextColor="#FFDE59"
-        android:translationZ="0dp"
         app:labelVisibilityMode="selected"
         app:menu="@menu/bottom_menu" />
 </LinearLayout>

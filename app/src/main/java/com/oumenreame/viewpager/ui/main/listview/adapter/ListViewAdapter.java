@@ -1,4 +1,4 @@
-package com.oumenreame.viewpager.adapter;
+package com.oumenreame.viewpager.ui.main.listview.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,35 +13,34 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.oumenreame.viewpager.R;
-import com.oumenreame.viewpager.model.Model;
+import com.oumenreame.viewpager.data.model.Item;
 
 import java.util.ArrayList;
 
-public class ListViewAdapter extends ArrayAdapter<Model> {
+public class ListViewAdapter extends ArrayAdapter<Item> {
     private final Context context;
     private final int resource;
-    private final ArrayList<Model> models;
+    private final ArrayList<Item> items;
 
-    public ListViewAdapter(@NonNull Context context, int resource, ArrayList<Model> models) {
-        super(context, resource, models);
+    public ListViewAdapter(@NonNull Context context, int resource, ArrayList<Item> items) {
+        super(context, resource, items);
         this.resource = resource;
         this.context = context;
-        this.models = models;
+        this.items = items;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Log.e("LOI", "getView: "+position);
-        @SuppressLint("ViewHolder") View item = LayoutInflater.from(this.context).inflate(this.resource,parent,false);
+        Log.e("LOI", "getView: " + position);
+        @SuppressLint("ViewHolder") View item = LayoutInflater.from(this.context).inflate(this.resource, parent, false);
 
         TextView txtTitle = item.findViewById(R.id.txtTitle);
         TextView txtDetail = item.findViewById(R.id.txtDetail);
 
-        Model model = models.get(position);
+        Item model = items.get(position);
         txtTitle.setText(model.getTitle());
         txtDetail.setText(model.getDetail());
-
 
         return item;
     }

@@ -5,12 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".fragment.RecyclerViewFragment">
-
-<!--    <EditText-->
-<!--        android:layout_margin="15dp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"/>-->
+    tools:context=".ui.main.recyclerview.RecyclerViewFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"

@@ -1,4 +1,6 @@
-package com.oumenreame.viewpager.fragment;
+package com.oumenreame.viewpager.ui.main.download;
+
+import static com.oumenreame.viewpager.utils.Constant.URL_DOWNLOAD;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +22,12 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.oumenreame.viewpager.R;
-import com.oumenreame.viewpager.task.DownLoad;
+import com.oumenreame.viewpager.service.DownLoad;
 
 public class DownloadFragment extends Fragment {
 
     private static final String TAG = "3";
+    private Button mBtnDownload;
     private ProgressBar progressBar2;
     private TextView mTvProgress2;
     private ProgressBar progressBar;
@@ -36,7 +38,6 @@ public class DownloadFragment extends Fragment {
 
 
     public DownloadFragment() {
-        // Required empty public constructor
     }
 
 
@@ -49,10 +50,10 @@ public class DownloadFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         Log.e(TAG, "onCreateView: ");
         return inflater.inflate(R.layout.fragment_download, container, false);
     }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -63,7 +64,7 @@ public class DownloadFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.e(TAG, "onSaveInstanceState: ");
-        outState.putInt(M_PROGRESS,progressBar.getProgress());
+        outState.putInt(M_PROGRESS, progressBar.getProgress());
     }
 
     @Override
@@ -71,34 +72,41 @@ public class DownloadFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Log.e(TAG, "onViewCreated: ");
 
+        initView(view);
+        initListener(view);
+    }
+
+    private void initListener(View view) {
+        mBtnDownload.setOnClickListener(view1 -> handleDownload(view));
+    }
+
+    private void handleDownload(View view) {
+        DownloadVideo downloadVideo2 = new DownloadVideo(view, progressBar, mTvProgress, 1);
+        downloadVideo2.execute(URL_DOWNLOAD, "video2.mp4");
+
+        Log.e(TAG, "onViewCreated: " + 1);
+
+        DownloadVideo downloadVideo = new DownloadVideo(view, progressBar1, mTvProgress1, 2);
+        downloadVideo.execute(URL_DOWNLOAD, "video.mp4");
+
+        Log.e(TAG, "onViewCreated: " + 2);
+
+        DownloadVideo downloadVideo1 = new DownloadVideo(view, progressBar2, mTvProgress2, 3);
+        downloadVideo1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, URL_DOWNLOAD, "video1.mp4");
+
+        Log.e(TAG, "onViewCreated: " + 3);
+    }
+
+    private void initView(View view) {
         EditText mEdtUrl = view.findViewById(R.id.edtUrl);
-        String url = "http://54.39.180.249/";
-        mEdtUrl.setText(url);
-        Button mBtnDownload = view.findViewById(R.id.btnDownload);
+        mEdtUrl.setText(URL_DOWNLOAD);
+        mBtnDownload = view.findViewById(R.id.btnDownload);
         mTvProgress2 = view.findViewById(R.id.tvProgress2);
         progressBar2 = view.findViewById(R.id.progressBar2);
         mTvProgress = view.findViewById(R.id.tvProgress);
         progressBar = view.findViewById(R.id.progressBar);
         mTvProgress1 = view.findViewById(R.id.tvProgress1);
         progressBar1 = view.findViewById(R.id.progressBar1);
-
-        mBtnDownload.setOnClickListener(view1 -> {
-            DownloadVideo downloadVideo2 = new DownloadVideo(view,progressBar,mTvProgress,1);
-            downloadVideo2.execute(url,"video2.mp4");
-
-            Log.e(TAG, "onViewCreated: "+1);
-
-            DownloadVideo downloadVideo = new DownloadVideo(view,progressBar1,mTvProgress1,2);
-            downloadVideo.execute(url,"video.mp4");
-
-            Log.e(TAG, "onViewCreated: "+2);
-
-            DownloadVideo downloadVideo1 = new DownloadVideo(view,progressBar2,mTvProgress2,3);
-            downloadVideo1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url,"video1.mp4");
-
-            Log.e(TAG, "onViewCreated: "+3);
-        });
-//        Handler handler = new Handler();
     }
 
     @Override
@@ -158,19 +166,19 @@ public class DownloadFragment extends Fragment {
         TextView tv;
         int a;
 
-        public DownloadVideo(View view, ProgressBar progressBar, TextView tv,int a) {
+        public DownloadVideo(View view, ProgressBar progressBar, TextView tv, int a) {
             this.view = view;
             this.progressBar = progressBar;
             this.tv = tv;
             this.a = a;
 
-            Log.e(TAG, "DownloadVideo: "+a);
+            Log.e(TAG, "DownloadVideo: " + a);
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.e(TAG, "onPreExecute: "+a);
+            Log.e(TAG, "onPreExecute: " + a);
             progressBar.setProgress(0);
             mTvProgress.setText("0%");
         }
@@ -179,9 +187,9 @@ public class DownloadFragment extends Fragment {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             if (aBoolean) {
-                Snackbar.make(view,"DownLoad Successful", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "DownLoad Successful", Snackbar.LENGTH_LONG).show();
             } else {
-                Snackbar.make(view,"DownLoad Failed", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "DownLoad Failed", Snackbar.LENGTH_LONG).show();
             }
         }
 
@@ -189,10 +197,10 @@ public class DownloadFragment extends Fragment {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            Log.e(TAG, "onProgressUpdate: "+a);
+            Log.e(TAG, "onProgressUpdate: " + a);
             progressBar.setMax(20);
             progressBar.setProgress(values[0]);
-            tv.setText(values[0]+"%");
+            tv.setText(values[0] + "%");
         }
     }
 }

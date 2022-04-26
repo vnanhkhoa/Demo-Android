@@ -1,4 +1,4 @@
-package com.oumenreame.viewpager.task;
+package com.oumenreame.viewpager.service;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ public class DownloadHandler extends Handler {
     View view;
     String name;
 
-    public DownloadHandler(ProgressBar progressBar, TextView tv,View view,String name) {
+    public DownloadHandler(ProgressBar progressBar, TextView tv, View view, String name) {
         this.progressBar = progressBar;
         this.tv = tv;
         this.view = view;
@@ -42,7 +42,7 @@ public class DownloadHandler extends Handler {
                 Bundle bundle = msg.getData();
                 boolean status = bundle.getBoolean(STATUS);
                 String s = (status) ? "Done" : "Failed";
-                Snackbar.make(view,s, BaseTransientBottomBar.LENGTH_SHORT).show();
+                Snackbar.make(view, s, BaseTransientBottomBar.LENGTH_SHORT).show();
                 break;
             case START:
                 this.progressBar.setProgress(0);
@@ -50,8 +50,8 @@ public class DownloadHandler extends Handler {
                 break;
             case SEND_PROGRESS:
                 this.progressBar.setProgress(msg.arg1);
-                this.tv.setText(msg.arg1+"%");
-                Log.e("SEND", name+" -> "+msg.arg1);
+                this.tv.setText(msg.arg1 + "%");
+                Log.e("SEND", name + " -> " + msg.arg1);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + msg.what);

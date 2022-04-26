@@ -1,4 +1,4 @@
-package com.oumenreame.viewpager.ui.mainviewpager2;
+package com.oumenreame.viewpager.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -12,11 +12,11 @@ import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.oumenreame.viewpager.R;
-import com.oumenreame.viewpager.fragment.HandlerFragment;
-import com.oumenreame.viewpager.ui.mainviewpager2.adapter.ViewPager2Adapter;
-import com.oumenreame.viewpager.fragment.DownloadFragment;
-import com.oumenreame.viewpager.fragment.RecyclerViewFragment;
-import com.oumenreame.viewpager.fragment.ListViewFragment;
+import com.oumenreame.viewpager.ui.main.handler.HandlerFragment;
+import com.oumenreame.viewpager.ui.main.adapter.ViewPager2Adapter;
+import com.oumenreame.viewpager.ui.main.download.DownloadFragment;
+import com.oumenreame.viewpager.ui.main.recyclerview.RecyclerViewFragment;
+import com.oumenreame.viewpager.ui.main.listview.ListViewFragment;
 
 import java.util.ArrayList;
 
@@ -28,29 +28,29 @@ public class MainActivityViewPager2 extends AppCompatActivity {
     ViewPager2 mViewPager;
     ArrayList<Fragment> mFragments;
     BottomNavigationView mBottomNavigationbar;
+    CircleIndicator3 mIndicator;
 
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_viewpager2);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 EXTERNAL_STORAGE_PERMISSION_CODE);
 
-        mBottomNavigationbar = findViewById(R.id.bottomNavigationbar);
-        mViewPager = findViewById(R.id.viewPager);
-        mViewPager.setOffscreenPageLimit(3);
+        initView();
+        initFragments();
+        initAdapter();
+        initListener();
+        mIndicator.setViewPager(mViewPager);
 
-        mFragments = new ArrayList<>();
-        mFragments.add(new RecyclerViewFragment());
-        mFragments.add(new ListViewFragment());
-        mFragments.add(new DownloadFragment());
-        mFragments.add(new HandlerFragment());
+        Log.e("Main", "onCreate: ");
+    }
 
-        ViewPager2Adapter viewPagerAdapter = new ViewPager2Adapter(MainActivityViewPager2.this, mFragments);
-        mViewPager.setAdapter(viewPagerAdapter);
+    @SuppressLint("NonConstantResourceId")
+    private void initListener() {
         mBottomNavigationbar.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.home:
                     mViewPager.setCurrentItem(0);
                     break;
@@ -71,7 +71,7 @@ public class MainActivityViewPager2 extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                switch (position){
+                switch (position) {
                     case 0:
                         mBottomNavigationbar.getMenu().findItem(R.id.home).setChecked(true);
                         break;
@@ -87,12 +87,28 @@ public class MainActivityViewPager2 extends AppCompatActivity {
                 }
             }
         });
-
-        CircleIndicator3 indicator = findViewById(R.id.indicator);
-        indicator.setViewPager(mViewPager);
-
-        Log.e("Main", "onCreate: ");
     }
+
+    private void initAdapter() {
+        ViewPager2Adapter viewPagerAdapter = new ViewPager2Adapter(MainActivityViewPager2.this, mFragments);
+        mViewPager.setAdapter(viewPagerAdapter);
+    }
+
+    private void initFragments() {
+        mFragments = new ArrayList<>();
+        mFragments.add(new RecyclerViewFragment());
+        mFragments.add(new ListViewFragment());
+        mFragments.add(new DownloadFragment());
+        mFragments.add(new HandlerFragment());
+    }
+
+    private void initView() {
+        mBottomNavigationbar = findViewById(R.id.bottomNavigationbar);
+        mViewPager = findViewById(R.id.viewPager);
+        mViewPager.setOffscreenPageLimit(3);
+        mIndicator = findViewById(R.id.indicator);
+    }
+
 
     @Override
     public void onBackPressed() {

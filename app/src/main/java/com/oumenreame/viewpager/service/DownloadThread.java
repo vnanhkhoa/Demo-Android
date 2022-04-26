@@ -1,15 +1,15 @@
-package com.oumenreame.viewpager.task;
+package com.oumenreame.viewpager.service;
 
-import static com.oumenreame.viewpager.task.DownloadHandler.DONE;
-import static com.oumenreame.viewpager.task.DownloadHandler.SEND_PROGRESS;
-import static com.oumenreame.viewpager.task.DownloadHandler.START;
-import static com.oumenreame.viewpager.task.DownloadHandler.STATUS;
+import static com.oumenreame.viewpager.service.DownloadHandler.DONE;
+import static com.oumenreame.viewpager.service.DownloadHandler.SEND_PROGRESS;
+import static com.oumenreame.viewpager.service.DownloadHandler.START;
+import static com.oumenreame.viewpager.service.DownloadHandler.STATUS;
 
 import android.os.Bundle;
 import android.os.Message;
 import android.os.SystemClock;
 
-public class DownloadThread implements Runnable{
+public class DownloadThread implements Runnable {
 
     DownloadHandler downloadHandler;
     long time;
@@ -34,7 +34,7 @@ public class DownloadThread implements Runnable{
         Message messageStatus = new Message();
         messageStatus.what = DONE;
         Bundle bundle = new Bundle();
-        bundle.putBoolean(STATUS,true);
+        bundle.putBoolean(STATUS, true);
         messageStatus.setData(bundle);
         downloadHandler.sendMessage(messageStatus);
     }

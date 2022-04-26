@@ -9,14 +9,14 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.oumenreame.viewpager.R;
-import com.oumenreame.viewpager.core.Constant;
-import com.oumenreame.viewpager.model.Model;
+import com.oumenreame.viewpager.utils.Constant;
+import com.oumenreame.viewpager.data.model.Item;
 
 import java.util.Objects;
 
 public class DetailModelActivity extends AppCompatActivity {
 
-    private TextView mTvTitle,mTvDetail;
+    private TextView mTvTitle, mTvDetail;
     final String M_TITLE = "Title";
     final String M_DETAIL = "Detail";
 
@@ -31,9 +31,9 @@ public class DetailModelActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent.hasExtra(Constant.MODEL)) {
-            Model model = (Model) intent.getSerializableExtra(Constant.MODEL);
-            mTvDetail.setText(model.getDetail());
-            mTvTitle.setText(model.getTitle());
+            Item item = (Item) intent.getSerializableExtra(Constant.MODEL);
+            mTvDetail.setText(item.getDetail());
+            mTvTitle.setText(item.getTitle());
         }
     }
 
@@ -48,8 +48,8 @@ public class DetailModelActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("Title",mTvTitle.getText().toString());
-        outState.putString("Detail",mTvDetail.getText().toString());
+        outState.putString("Title", mTvTitle.getText().toString());
+        outState.putString("Detail", mTvDetail.getText().toString());
     }
 
     @Override

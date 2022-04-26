@@ -5,18 +5,20 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_height="match_parent"
-    tools:context=".fragment.DownloadFragment">
+    tools:context=".ui.main.download.DownloadFragment">
 
     <EditText
         android:id="@+id/edtUrl"
         android:layout_width="match_parent"
-        android:layout_margin="15dp"
-        android:layout_height="wrap_content" />
+        android:layout_margin="@dimen/m_15"
+        android:layout_height="wrap_content"
+        tools:ignore="LabelFor,TextFields"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/btnDownload"
         android:layout_width="wrap_content"
-        android:text="Download"
+        android:text="@string/btnDownload_text"
         android:layout_gravity="center"
         android:layout_height="wrap_content"/>
 
@@ -25,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Start"
+        android:text="@string/start"
         android:textColor="@color/black"/>
 
     <ProgressBar
@@ -33,15 +35,15 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp" />
+        android:layout_marginHorizontal="@dimen/m_15" />
 
     <TextView
         android:id="@+id/tvProgress1"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/m_15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Start"
+        android:text="@string/start"
         android:textColor="@color/black"/>
 
     <ProgressBar
@@ -53,11 +55,11 @@
 
     <TextView
         android:id="@+id/tvProgress2"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/m_15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Start"
+        android:text="@string/start"
         android:textColor="@color/black"/>
 
     <ProgressBar
@@ -65,6 +67,6 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp" />
+        android:layout_marginHorizontal="@dimen/m_15" />
 
 </LinearLayout>

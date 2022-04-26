@@ -1,13 +1,13 @@
-package com.oumenreame.viewpager.model;
+package com.oumenreame.viewpager.data.model;
 
 import java.io.Serializable;
 
-public class Model implements Serializable {
+public class Item implements Serializable {
 
     private String title;
     private String detail;
 
-    public Model() {
+    public Item() {
     }
 
     public String getTitle() {

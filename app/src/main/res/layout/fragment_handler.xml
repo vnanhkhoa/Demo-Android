@@ -8,7 +8,7 @@
     <Button
         android:id="@+id/btnDownload"
         android:layout_width="wrap_content"
-        android:text="Download"
+        android:text="@string/btnDownload_text"
         android:layout_gravity="center"
         android:layout_height="wrap_content"/>
 
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Start"
+        android:text="@string/start"
         android:textColor="@color/black"/>
 
     <ProgressBar
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Start"
+        android:text="@string/start"
         android:textColor="@color/black"/>
 
     <ProgressBar
@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Start"
+        android:text="@string/start"
         android:textColor="@color/black"/>
 
     <ProgressBar

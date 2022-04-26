@@ -1,4 +1,4 @@
-package com.oumenreame.viewpager.fragment;
+package com.oumenreame.viewpager.ui.main.handler;
 
 import android.os.Bundle;
 
@@ -14,11 +14,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.oumenreame.viewpager.R;
-import com.oumenreame.viewpager.task.DownloadHandler;
-import com.oumenreame.viewpager.task.DownloadThread;
+import com.oumenreame.viewpager.service.DownloadHandler;
+import com.oumenreame.viewpager.service.DownloadThread;
 
 
 public class HandlerFragment extends Fragment {
+
+    Button mBtnDownload;
+    TextView mTvProgress;
+    ProgressBar progressBar;
+    TextView mTvProgress1;
+    ProgressBar progressBar1;
+    TextView mTvProgress2;
+    ProgressBar progressBar2;
 
     public HandlerFragment() {
 
@@ -39,22 +47,31 @@ public class HandlerFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button mBtnDownload = view.findViewById(R.id.btnDownload);
-        TextView mTvProgress = view.findViewById(R.id.tvProgress);
-        ProgressBar progressBar = view.findViewById(R.id.progressBar);
-        TextView mTvProgress1 = view.findViewById(R.id.tvProgress1);
-        ProgressBar progressBar1 = view.findViewById(R.id.progressBar1);
-        TextView mTvProgress2 = view.findViewById(R.id.tvProgress2);
-        ProgressBar progressBar2 = view.findViewById(R.id.progressBar2);
 
+        initView(view);
+        initListener(view);
+
+    }
+
+    private void initListener(View view) {
         mBtnDownload.setOnClickListener((view1 -> {
             DownloadHandler handler = new DownloadHandler(progressBar, mTvProgress, view, "A");
             DownloadHandler handler1 = new DownloadHandler(progressBar1, mTvProgress1, view, "B");
             DownloadHandler handler2 = new DownloadHandler(progressBar2, mTvProgress2, view, "C");
 
-            new Thread(new DownloadThread(handler,500)).start();
-            new Thread(new DownloadThread(handler1,800)).start();
-            new Thread(new DownloadThread(handler2,1000)).start();
+            new Thread(new DownloadThread(handler, 500)).start();
+            new Thread(new DownloadThread(handler1, 800)).start();
+            new Thread(new DownloadThread(handler2, 1000)).start();
         }));
+    }
+
+    private void initView(View view) {
+        mBtnDownload = view.findViewById(R.id.btnDownload);
+        mTvProgress = view.findViewById(R.id.tvProgress);
+        progressBar = view.findViewById(R.id.progressBar);
+        mTvProgress1 = view.findViewById(R.id.tvProgress1);
+        progressBar1 = view.findViewById(R.id.progressBar1);
+        mTvProgress2 = view.findViewById(R.id.tvProgress2);
+        progressBar2 = view.findViewById(R.id.progressBar2);
     }
 }

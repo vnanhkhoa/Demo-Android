@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingHorizontal="20dp"
+    android:paddingHorizontal="@dimen/ph_detail_model"
     tools:context=".ui.detailmodel.DetailModelActivity">
 
     <TextView
@@ -14,17 +14,17 @@
         android:text="@string/app_name"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="@dimen/tsi_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/tvDetail"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/mt_tv_detail"
         android:text="@string/app_name"
         android:textColor="@color/black"
         android:textStyle="italic"
-        android:textSize="16sp"
+        android:textSize="@dimen/tsi_tv_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>

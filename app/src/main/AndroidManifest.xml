@@ -18,12 +18,7 @@
             android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
             android:exported="false" />
         <activity
-            android:name=".ui.mainviewpager.MainActivityViewPager"
-            android:exported="false">
-
-        </activity>
-        <activity
-            android:name=".ui.mainviewpager2.MainActivityViewPager2"
+            android:name=".ui.main.MainActivityViewPager2"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true">
             <intent-filter>
