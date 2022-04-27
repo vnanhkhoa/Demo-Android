@@ -1,42 +1,51 @@
 package com.oumenreame.viewpager.ui.main;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
+import static com.oumenreame.viewpager.utils.Constant.PERMISSION;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.oumenreame.viewpager.R;
-import com.oumenreame.viewpager.ui.main.handler.HandlerFragment;
 import com.oumenreame.viewpager.ui.main.adapter.ViewPager2Adapter;
 import com.oumenreame.viewpager.ui.main.download.DownloadFragment;
-import com.oumenreame.viewpager.ui.main.recyclerview.RecyclerViewFragment;
+import com.oumenreame.viewpager.ui.main.handler.HandlerFragment;
 import com.oumenreame.viewpager.ui.main.listview.ListViewFragment;
+import com.oumenreame.viewpager.ui.main.recyclerview.RecyclerViewFragment;
 
 import java.util.ArrayList;
 
 import me.relex.circleindicator.CircleIndicator3;
 
 public class MainActivityViewPager2 extends AppCompatActivity {
-
-    private static final int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
     ViewPager2 mViewPager;
     ArrayList<Fragment> mFragments;
     BottomNavigationView mBottomNavigationbar;
     CircleIndicator3 mIndicator;
+    ActivityResultLauncher<String[]> mArrayActivityResultLauncher;
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_viewpager2);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                EXTERNAL_STORAGE_PERMISSION_CODE);
+
+        mArrayActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestMultiplePermissions(),
+                result -> {
+                    for (String key : result.keySet()) {
+                        Log.e("ABC", "onCreate: "+result.get(key));
+                    }
+                }
+        );
+
+        mArrayActivityResultLauncher.launch(PERMISSION);
 
         initView();
         initFragments();

@@ -95,6 +95,8 @@ public class DownloadFragment extends Fragment {
         downloadVideo1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, URL_DOWNLOAD, "video1.mp4");
 
         Log.e(TAG, "onViewCreated: " + 3);
+
+        mBtnDownload.setEnabled(false);
     }
 
     private void initView(View view) {
@@ -198,7 +200,6 @@ public class DownloadFragment extends Fragment {
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             Log.e(TAG, "onProgressUpdate: " + a);
-            progressBar.setMax(20);
             progressBar.setProgress(values[0]);
             tv.setText(values[0] + "%");
         }

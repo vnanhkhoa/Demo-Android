@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- main/circleindicator -->
     <dimen name="mb_indicator">15dp</dimen>
     <dimen name="wh_ci_indicator">8dp</dimen>
     <dimen name="h_indicator">8dp</dimen>
 
-    <!-- main/bottom_navigation -->
     <dimen name="item_icon_size">28dp</dimen>
     <dimen name="elevation_bottom_navigation">20dp</dimen>
 
-    <!-- detail_model-->
     <dimen name="ph_detail_model">20dp</dimen>
 
-    <!--detail_model/title-->
     <dimen name="tsi_tv_title">18dp</dimen>
 
-    <!--detail_model/detail-->
     <dimen name="mt_tv_detail">15dp</dimen>
     <dimen name="tsi_tv_detail">16dp</dimen>
     <dimen name="m_15">15dp</dimen>
@@ -27,6 +22,4 @@
     <dimen name="vh_item_icon">150dp</dimen>
     <dimen name="p_item_linear">10dp</dimen>
     <dimen name="ts_item_tv">15sp</dimen>
-
-
 </resources>
