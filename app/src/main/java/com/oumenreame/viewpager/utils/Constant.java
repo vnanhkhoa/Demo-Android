@@ -5,10 +5,16 @@ import android.Manifest;
 public class Constant {
     public static final String MODEL = "model";
     public static final String URL_DOWNLOAD = "http://54.39.180.249/";
+
+    public static final String READ_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
+    public static final String WRITE_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    public static final String READ_CONTACTS = Manifest.permission.READ_CONTACTS;
+    public static final String CAMERA = Manifest.permission.CAMERA;
+    
     public static final String[] PERMISSION = new String[] {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_CONTACTS,
-            Manifest.permission.CAMERA
+            READ_STORAGE,
+            WRITE_STORAGE,
+            READ_CONTACTS,
+            CAMERA
     };
 }

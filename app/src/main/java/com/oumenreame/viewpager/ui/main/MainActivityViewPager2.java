@@ -3,17 +3,22 @@ package com.oumenreame.viewpager.ui.main;
 import static com.oumenreame.viewpager.utils.Constant.PERMISSION;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.oumenreame.viewpager.R;
+import com.oumenreame.viewpager.service.RequiredPermission;
 import com.oumenreame.viewpager.ui.main.adapter.ViewPager2Adapter;
 import com.oumenreame.viewpager.ui.main.download.DownloadFragment;
 import com.oumenreame.viewpager.ui.main.handler.HandlerFragment;
@@ -29,23 +34,35 @@ public class MainActivityViewPager2 extends AppCompatActivity {
     ArrayList<Fragment> mFragments;
     BottomNavigationView mBottomNavigationbar;
     CircleIndicator3 mIndicator;
-    ActivityResultLauncher<String[]> mArrayActivityResultLauncher;
+    public static ActivityResultLauncher<String[]> sArrayActivityResultLauncher;
+    @SuppressLint("StaticFieldLeak")
+    public static RequiredPermission requiredPermission;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_viewpager2);
 
-        mArrayActivityResultLauncher = registerForActivityResult(
+        View parentLayout = findViewById(android.R.id.content);
+        sArrayActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestMultiplePermissions(),
                 result -> {
                     for (String key : result.keySet()) {
-                        Log.e("ABC", "onCreate: "+result.get(key));
+                        if (!result.get(key)) {
+                            if (shouldShowRequestPermissionRationale(key)) {
+                                requiredPermission.showAlert(key);
+                            } else {
+                                Snackbar.make(parentLayout, "Permission For App", Snackbar.LENGTH_LONG)
+                                        .setAction("Setting", view -> requiredPermission.showSettingSystem())
+                                        .show();
+                            }
+                        }
                     }
                 }
         );
 
-        mArrayActivityResultLauncher.launch(PERMISSION);
+        requiredPermission = new RequiredPermission(MainActivityViewPager2.this, PERMISSION, sArrayActivityResultLauncher);
 
         initView();
         initFragments();

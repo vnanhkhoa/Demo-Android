@@ -1,16 +1,13 @@
 package com.oumenreame.viewpager.ui.main.download;
 
+import static com.oumenreame.viewpager.ui.main.MainActivityViewPager2.requiredPermission;
+import static com.oumenreame.viewpager.utils.Constant.READ_STORAGE;
 import static com.oumenreame.viewpager.utils.Constant.URL_DOWNLOAD;
+import static com.oumenreame.viewpager.utils.Constant.WRITE_STORAGE;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +17,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.oumenreame.viewpager.R;
 import com.oumenreame.viewpager.service.DownLoad;
@@ -28,12 +29,8 @@ public class DownloadFragment extends Fragment {
 
     private static final String TAG = "3";
     private Button mBtnDownload;
-    private ProgressBar progressBar2;
-    private TextView mTvProgress2;
     private ProgressBar progressBar;
     private TextView mTvProgress;
-    private ProgressBar progressBar1;
-    private TextView mTvProgress1;
     final String M_PROGRESS = "Progress";
 
 
@@ -74,27 +71,22 @@ public class DownloadFragment extends Fragment {
 
         initView(view);
         initListener(view);
+
     }
 
     private void initListener(View view) {
-        mBtnDownload.setOnClickListener(view1 -> handleDownload(view));
+        mBtnDownload.setOnClickListener(view1 -> {
+            if (requiredPermission.isPermissioned(READ_STORAGE) && requiredPermission.isPermissioned(WRITE_STORAGE)) {
+                handleDownload(view);
+            } else {
+                requiredPermission.requestPermission(READ_STORAGE, WRITE_STORAGE);
+            }
+        });
     }
 
     private void handleDownload(View view) {
         DownloadVideo downloadVideo2 = new DownloadVideo(view, progressBar, mTvProgress, 1);
         downloadVideo2.execute(URL_DOWNLOAD, "video2.mp4");
-
-        Log.e(TAG, "onViewCreated: " + 1);
-
-        DownloadVideo downloadVideo = new DownloadVideo(view, progressBar1, mTvProgress1, 2);
-        downloadVideo.execute(URL_DOWNLOAD, "video.mp4");
-
-        Log.e(TAG, "onViewCreated: " + 2);
-
-        DownloadVideo downloadVideo1 = new DownloadVideo(view, progressBar2, mTvProgress2, 3);
-        downloadVideo1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, URL_DOWNLOAD, "video1.mp4");
-
-        Log.e(TAG, "onViewCreated: " + 3);
 
         mBtnDownload.setEnabled(false);
     }
@@ -103,12 +95,8 @@ public class DownloadFragment extends Fragment {
         EditText mEdtUrl = view.findViewById(R.id.edtUrl);
         mEdtUrl.setText(URL_DOWNLOAD);
         mBtnDownload = view.findViewById(R.id.btnDownload);
-        mTvProgress2 = view.findViewById(R.id.tvProgress2);
-        progressBar2 = view.findViewById(R.id.progressBar2);
         mTvProgress = view.findViewById(R.id.tvProgress);
         progressBar = view.findViewById(R.id.progressBar);
-        mTvProgress1 = view.findViewById(R.id.tvProgress1);
-        progressBar1 = view.findViewById(R.id.progressBar1);
     }
 
     @Override
@@ -193,6 +181,7 @@ public class DownloadFragment extends Fragment {
             } else {
                 Snackbar.make(view, "DownLoad Failed", Snackbar.LENGTH_LONG).show();
             }
+            mBtnDownload.setEnabled(true);
         }
 
         @SuppressLint("SetTextI18n")

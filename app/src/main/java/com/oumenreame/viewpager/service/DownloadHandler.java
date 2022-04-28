@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -23,14 +24,16 @@ public class DownloadHandler extends Handler {
 
     ProgressBar progressBar;
     TextView tv;
+    Button btn;
     View view;
     String name;
 
-    public DownloadHandler(ProgressBar progressBar, TextView tv, View view, String name) {
+    public DownloadHandler(ProgressBar progressBar, TextView tv, View view, String name,Button btn) {
         this.progressBar = progressBar;
         this.tv = tv;
         this.view = view;
         this.name = name;
+        this.btn = btn;
     }
 
     @SuppressLint("SetTextI18n")
@@ -43,10 +46,12 @@ public class DownloadHandler extends Handler {
                 boolean status = bundle.getBoolean(STATUS);
                 String s = (status) ? "Done" : "Failed";
                 Snackbar.make(view, s, BaseTransientBottomBar.LENGTH_SHORT).show();
+                this.btn.setEnabled(true);
                 break;
             case START:
                 this.progressBar.setProgress(0);
                 this.tv.setText("0%");
+                this.btn.setEnabled(false);
                 break;
             case SEND_PROGRESS:
                 this.progressBar.setProgress(msg.arg1);
