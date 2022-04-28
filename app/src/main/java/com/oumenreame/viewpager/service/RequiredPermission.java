@@ -11,36 +11,18 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.util.ArrayList;
 
 public class RequiredPermission {
     private final Context mContext;
-    private final String[] permissions;
     ActivityResultLauncher<String[]> mArrayActivityResultLauncher;
 
-    public RequiredPermission(Context mContext, String[] permissions, ActivityResultLauncher<String[]> mArrayActivityResultLauncher) {
+    public RequiredPermission(Context mContext, ActivityResultLauncher<String[]> mArrayActivityResultLauncher) {
         this.mContext = mContext;
-        this.permissions = permissions;
         this.mArrayActivityResultLauncher = mArrayActivityResultLauncher;
-
-        setPermission();
     }
 
     public void requestPermission(String... permission) {
         mArrayActivityResultLauncher.launch(permission);
-    }
-
-    public void setPermission() {
-        ArrayList<String> arr = new ArrayList<>();
-        for (String permission : permissions) {
-            if (!isPermissioned(permission)) {
-                arr.add(permission);
-            }
-        }
-
-        if (arr.size() > 0) {
-            requestPermission(arr.toArray(new String[0]));
-        }
     }
 
     public boolean isPermissioned(String permission) {
@@ -53,13 +35,13 @@ public class RequiredPermission {
         mContext.startActivity(intent);
     }
 
-    public void showAlert(String permission) {
+    public void showAlert() {
         new MaterialAlertDialogBuilder(mContext)
                 .setTitle("Permission Required")
                 .setMessage("This Permission Is Required For Proper Working Of The App")
-                .setNegativeButton("No Thank", (dialogInterface, i) -> dialogInterface.dismiss())
-                .setPositiveButton("Ask Permission Again", (d, i) -> {
-                    requestPermission(permission);
+                .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss())
+                .setPositiveButton("OK", (d, i) -> {
+                    showSettingSystem();
                     d.dismiss();
                 }).show();
     }

@@ -8,13 +8,9 @@ public class Constant {
 
     public static final String READ_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     public static final String WRITE_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-    public static final String READ_CONTACTS = Manifest.permission.READ_CONTACTS;
-    public static final String CAMERA = Manifest.permission.CAMERA;
     
     public static final String[] PERMISSION = new String[] {
             READ_STORAGE,
             WRITE_STORAGE,
-            READ_CONTACTS,
-            CAMERA
     };
 }

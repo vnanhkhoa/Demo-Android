@@ -1,6 +1,7 @@
 package com.oumenreame.viewpager.ui.main.download;
 
 import static com.oumenreame.viewpager.ui.main.MainActivityViewPager2.requiredPermission;
+import static com.oumenreame.viewpager.utils.Constant.PERMISSION;
 import static com.oumenreame.viewpager.utils.Constant.READ_STORAGE;
 import static com.oumenreame.viewpager.utils.Constant.URL_DOWNLOAD;
 import static com.oumenreame.viewpager.utils.Constant.WRITE_STORAGE;
@@ -79,7 +80,7 @@ public class DownloadFragment extends Fragment {
             if (requiredPermission.isPermissioned(READ_STORAGE) && requiredPermission.isPermissioned(WRITE_STORAGE)) {
                 handleDownload(view);
             } else {
-                requiredPermission.requestPermission(READ_STORAGE, WRITE_STORAGE);
+                requiredPermission.requestPermission(PERMISSION);
             }
         });
     }

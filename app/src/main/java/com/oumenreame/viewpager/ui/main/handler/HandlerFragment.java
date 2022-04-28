@@ -1,6 +1,10 @@
 package com.oumenreame.viewpager.ui.main.handler;
 
+import static com.oumenreame.viewpager.ui.main.MainActivityViewPager2.requiredPermission;
+import static com.oumenreame.viewpager.utils.Constant.PERMISSION;
+import static com.oumenreame.viewpager.utils.Constant.READ_STORAGE;
 import static com.oumenreame.viewpager.utils.Constant.URL_DOWNLOAD;
+import static com.oumenreame.viewpager.utils.Constant.WRITE_STORAGE;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -50,10 +54,19 @@ public class HandlerFragment extends Fragment {
 
     private void initListener(View view) {
         mBtnDownload.setOnClickListener((view1 -> {
-            DownloadHandler handler = new DownloadHandler(progressBar, mTvProgress, view, "A",mBtnDownload);
-            new Thread(new DownloadThread(handler, 500,URL_DOWNLOAD,"video.mp4")).start();
+            if (requiredPermission.isPermissioned(READ_STORAGE) && requiredPermission.isPermissioned(WRITE_STORAGE)) {
+                handleDownload(view);
+            } else {
+                requiredPermission.requestPermission(PERMISSION);
+            }
         }));
     }
+
+    private void handleDownload(View view) {
+        DownloadHandler handler = new DownloadHandler(progressBar, mTvProgress, view, "A",mBtnDownload);
+        new Thread(new DownloadThread(handler, 500,URL_DOWNLOAD,"video.mp4")).start();
+    }
+
 
     private void initView(View view) {
         mBtnDownload = view.findViewById(R.id.btnDownload);
