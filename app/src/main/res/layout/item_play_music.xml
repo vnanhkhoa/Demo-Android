@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:background="#FFEE58"
+    android:paddingHorizontal="@dimen/p_5"
+    android:layout_height="64dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="@dimen/wh_54"
+        android:layout_gravity="center"
+        app:cardCornerRadius="@dimen/p_5"
+        android:layout_height="@dimen/wh_54">
+
+        <ImageView
+            android:src="@drawable/ic_round_music_note_24"
+            android:id="@+id/imgAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:paddingStart="@dimen/pl_10"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        tools:ignore="RtlSymmetry">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.Compat.Notification.Title"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/tvArtist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            style="@style/TextAppearance.Compat.Notification.Info"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/app_name"/>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imgBtnPrevious"
+        android:src="@drawable/ic_round_skip_previous_24"
+        android:layout_width="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingHorizontal="@dimen/p_5"
+        app:tint="@color/black"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription,InefficientWeight" />
+
+    <ImageButton
+        android:id="@+id/imgBtnPlay"
+        android:src="@drawable/ic_round_pause_24"
+        android:layout_width="wrap_content"
+        android:background="@android:color/transparent"
+        app:tint="@color/black"
+        android:paddingHorizontal="@dimen/p_5"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription,InefficientWeight" />
+
+    <ImageButton
+        android:id="@+id/imgBtnNext"
+        android:src="@drawable/ic_round_skip_next_24"
+        android:layout_width="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingHorizontal="@dimen/p_5"
+        app:tint="@color/black"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription,InefficientWeight" />
+</LinearLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ph_15">15dp</dimen>
+    <dimen name="wh_80">80dp</dimen>
+    <dimen name="ts_16">16sp</dimen>
+    <dimen name="pl_10">10dp</dimen>
+    <dimen name="none">0dp</dimen>
+    <dimen name="p_5">5dp</dimen>
+    <dimen name="ts_14">14sp</dimen>
+    <dimen name="wh_64">64dp</dimen>
+    <dimen name="wh_54">54dp</dimen>
+    <dimen name="wh_250">250dp</dimen>
+    <dimen name="radius_125">125dp</dimen>
+</resources>
