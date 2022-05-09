@@ -1,5 +1,8 @@
 package com.eyrinage.musiclocal.data.local;
 
+import static android.media.MediaMetadataRetriever.METADATA_KEY_ALBUM;
+import static android.media.MediaMetadataRetriever.METADATA_KEY_ARTIST;
+import static android.media.MediaMetadataRetriever.METADATA_KEY_TITLE;
 import static com.eyrinage.musiclocal.utils.Constant.ALBUM_SONG;
 import static com.eyrinage.musiclocal.utils.Constant.ARTIST_SONG;
 import static com.eyrinage.musiclocal.utils.Constant.PATH_SONG;
@@ -9,10 +12,12 @@ import static com.eyrinage.musiclocal.utils.Constant._ID;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import com.eyrinage.musiclocal.data.models.Song;
 
@@ -58,5 +63,37 @@ public class SongRepositoryImp implements SongRepository {
         return songs;
     }
 
+    public void getSongFolderAsset() {
+        AssetManager assetManager = mContext.getAssets();
+        try {
+            String[] files = assetManager.list("music");
+            for (int i = 0; i <= files.length; i++) {
+                Song song = getInfoSong("music/"+files[i]);
+                song.set_id(i);
+                songs.add(song);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private Song getInfoSong(String fileName) {
+        Song song = new Song();
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+
+        try {
+            AssetFileDescriptor afd = mContext.getAssets().openFd(fileName);
+            mmr.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+
+            song.setTitle(mmr.extractMetadata(METADATA_KEY_TITLE));
+            song.setAlbum(mmr.extractMetadata(METADATA_KEY_ALBUM));
+            song.setArtAlbum(mmr.getEmbeddedPicture());
+            song.setLocation(fileName);
+            song.setArtist(mmr.extractMetadata(METADATA_KEY_ARTIST));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return song;
+    }
 }

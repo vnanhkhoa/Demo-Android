@@ -15,11 +15,11 @@ import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -51,6 +51,7 @@ public class PlayMusicService extends Service {
     public void onCreate() {
         super.onCreate();
         position = -1;
+
     }
 
     @Override
@@ -63,7 +64,9 @@ public class PlayMusicService extends Service {
         if (intent != null) {
             if (intent.hasExtra(POSITION)) {
                 SongRepositoryImp mSongRepositoryImp = new SongRepositoryImp(this);
-                songs = mSongRepositoryImp.getSongFromLocal();
+//                songs = mSongRepositoryImp.getSongFromLocal();
+                mSongRepositoryImp.getSongFolderAsset();
+                songs = mSongRepositoryImp.getSongs();
                 this.position = intent.getIntExtra(POSITION, -1);
                 this.song = this.songs.get(position);
 
@@ -229,7 +232,8 @@ public class PlayMusicService extends Service {
                         .build()
         );
         try {
-            mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(song.getLocation()));
+            AssetFileDescriptor afd = getAssets().openFd(song.getLocation());
+            mediaPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
             mediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();

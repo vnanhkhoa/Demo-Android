@@ -27,7 +27,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -106,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                 }
-                mSongs = mSongRepositoryImp.getSongFromLocal();
+//                mSongs = mSongRepositoryImp.getSongFromLocal();
+                mSongRepositoryImp.getSongFolderAsset();
+                mSongs = mSongRepositoryImp.getSongs();
             }
     );
     private Gson mGson;
@@ -120,12 +121,12 @@ public class MainActivity extends AppCompatActivity {
             mPlayMusicService = localBinder.getService();
             isConnect = true;
 
-            if (mPlayMusicService.isPlaying()){
-                Log.e("LOI", "onServiceConnected: "+mPlayMusicService.getPosition());
-                position = mPlayMusicService.getPosition();
-                setSong();
-                mLnPlay.setVisibility(View.VISIBLE);
+            position = mPlayMusicService.getPosition();
+            setSong();
+            if (mPlayMusicService.isPlaying()) {
+
             }
+            mLnPlay.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -159,10 +160,12 @@ public class MainActivity extends AppCompatActivity {
             requiredPermission.requestPermission(PERMISSIONS_MAIN);
             mSongs = new ArrayList<>();
         } else {
-            mSongs = mSongRepositoryImp.getSongFromLocal();
+//            mSongs = mSongRepositoryImp.getSongFromLocal();
+            mSongRepositoryImp.getSongFolderAsset();
+            mSongs = mSongRepositoryImp.getSongs();
             if (isServiceRunning(MainActivity.this)) {
-                Intent intent = new Intent(MainActivity.this,PlayMusicService.class);
-                bindService(intent,mServiceConnection,Context.BIND_AUTO_CREATE);
+                Intent intent = new Intent(MainActivity.this, PlayMusicService.class);
+                bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
             }
         }
     }

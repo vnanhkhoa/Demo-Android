@@ -1,12 +1,13 @@
 package com.eyrinage.musiclocal.data.models;
 
+import static android.media.MediaMetadataRetriever.METADATA_KEY_ALBUM;
+import static android.media.MediaMetadataRetriever.METADATA_KEY_ARTIST;
+import static android.media.MediaMetadataRetriever.METADATA_KEY_TITLE;
 import static com.eyrinage.musiclocal.ui.main.MainActivity.sHashMap;
 
 import android.media.MediaMetadataRetriever;
-import android.os.Build;
 
 import java.io.Serializable;
-import java.util.HashMap;
 
 public class Song implements Serializable {
 
@@ -21,6 +22,7 @@ public class Song implements Serializable {
     private byte[] artAlbum;
 
     public Song() {
+
     }
 
     public Song(long _id, String title, String artist, String location, String album) {
@@ -90,6 +92,10 @@ public class Song implements Serializable {
         this.album = album;
     }
 
+    public void setArtAlbum(byte[] artAlbum) {
+        this.artAlbum = artAlbum;
+    }
+
     private byte[] getImageAlbum() {
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         try {
@@ -97,9 +103,9 @@ public class Song implements Serializable {
         } catch (RuntimeException ex) {
             ex.printStackTrace();
         }
-
         byte[] bytes = mmr.getEmbeddedPicture();
         mmr.release();
         return bytes;
     }
+
 }
