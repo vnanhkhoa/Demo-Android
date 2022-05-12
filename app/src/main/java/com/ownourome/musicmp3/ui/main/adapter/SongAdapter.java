@@ -2,7 +2,6 @@ package com.ownourome.musicmp3.ui.main.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +46,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongHolder>{
 
     @Override
     public int getItemCount() {
-        Log.e("LOI", "SongAdapter: "+mSongs.size());
         return mSongs.size();
     }
 

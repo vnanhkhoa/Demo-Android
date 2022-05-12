@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initListeners() {
         mSongItemClick = (position) -> {
-            Song song = mSongs.get(position);
+            Song song = mSongAdapter.getSongs().get(position);
             Toast.makeText(this, song.getTitle(), Toast.LENGTH_SHORT).show();
         };
     }
