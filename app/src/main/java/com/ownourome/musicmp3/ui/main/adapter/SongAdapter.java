@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.ownourome.musicmp3.R;
 import com.ownourome.musicmp3.data.models.Song;
-import com.ownourome.musicmp3.utils.calback.SongItemClick;
+import com.ownourome.musicmp3.utils.callback.SongItemClick;
 
 import java.util.ArrayList;
 

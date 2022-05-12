@@ -21,9 +21,6 @@ public class Song {
     @SerializedName("duration")
     private int duration;
 
-    private String durationString;
-    private String linkSong;
-
     public Song() {
     }
 
@@ -33,20 +30,14 @@ public class Song {
         this.artistsNames = artistsNames;
         this.thumbnail = thumbnail;
         this.duration = duration;
-        this.linkSong = URL_SONG.replace(":idSong", this.id);
-        setDurationString();
     }
 
     public String getDurationString() {
-        return durationString;
-    }
-
-    public void setDurationString() {
         String minus = ("0"+(this.duration / 60)).substring(1);
         String second = ("0"+(this.duration % 60)).substring(1);
-
-        this.durationString = minus+":"+second;
+        return minus+":"+second;
     }
+
 
     public String getId() {
         return id;
@@ -89,10 +80,6 @@ public class Song {
     }
 
     public String getLinkSong() {
-        return linkSong;
-    }
-
-    public void setLinkSong(String linkSong) {
-        this.linkSong = linkSong;
+        return URL_SONG.replace(":idSong", this.id);
     }
 }

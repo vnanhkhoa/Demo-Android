@@ -1,4 +1,4 @@
-package com.ownourome.musicmp3.data.remote;
+package com.ownourome.musicmp3.data.network;
 
 import com.ownourome.musicmp3.data.models.Result;
 
