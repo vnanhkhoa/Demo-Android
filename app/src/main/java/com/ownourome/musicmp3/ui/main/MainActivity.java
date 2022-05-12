@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mApiRepositoryImp = ApiRepositoryImp.getInstance();
+
         initViews();
         initListeners();
         initData();
@@ -57,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         mSongs = new ArrayList<>();
-        mApiRepositoryImp = new ApiRepositoryImp();
         mApiRepositoryImp.getSongVN(getSongVNCallBack);
 
         mSongAdapter = new SongAdapter(

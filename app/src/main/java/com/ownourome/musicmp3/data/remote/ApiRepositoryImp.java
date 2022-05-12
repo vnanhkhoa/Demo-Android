@@ -12,7 +12,15 @@ import retrofit2.Response;
 
 public class ApiRepositoryImp implements ApiRepository {
 
+    private static ApiRepositoryImp INSTANCE = null;
     private final ApiConfig mApiConfig;
+
+    public static ApiRepositoryImp getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ApiRepositoryImp();
+        }
+        return INSTANCE;
+    }
 
     public ApiRepositoryImp() {
         this.mApiConfig = ApiConfig.getInstance();
