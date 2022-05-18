@@ -3,6 +3,7 @@ package com.ownourome.musicmp3.data.souce.local.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @Dao
 public interface SongDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Song song);
     @Update
     void update(Song song);

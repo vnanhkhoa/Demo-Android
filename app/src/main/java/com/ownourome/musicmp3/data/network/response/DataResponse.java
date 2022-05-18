@@ -5,15 +5,15 @@ import com.ownourome.musicmp3.data.models.Song;
 
 import java.util.ArrayList;
 
-public class Data {
+public class DataResponse {
 
     @SerializedName("song")
     private ArrayList<Song> songs;
 
-    public Data() {
+    public DataResponse() {
     }
 
-    public Data(ArrayList<Song> songs) {
+    public DataResponse(ArrayList<Song> songs) {
         this.songs = songs;
     }
 

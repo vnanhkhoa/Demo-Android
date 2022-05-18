@@ -31,9 +31,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.ownourome.musicmp3.R;
 import com.ownourome.musicmp3.data.models.Song;
-import com.ownourome.musicmp3.data.network.response.Result;
+import com.ownourome.musicmp3.data.network.response.ResultResponse;
 import com.ownourome.musicmp3.data.souce.Repository;
-import com.ownourome.musicmp3.receiver.CheckConnectInternet;
+import com.ownourome.musicmp3.receiver.ReceiveInternet;
 import com.ownourome.musicmp3.ui.main.adapter.SongAdapter;
 import com.ownourome.musicmp3.utils.Constant;
 import com.ownourome.musicmp3.utils.callback.CheckInternetCallback;
@@ -101,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         View root = findViewById(android.R.id.content).getRootView();
+        requiredPermission = new RequiredPermission(this, mResultLauncher);
+        repository = Repository.getInstance(this);
+
+        requirePermissions();
+        initViews();
+        initListeners();
         CheckInternetCallback checkInternetCallback = new CheckInternetCallback() {
             @Override
             public void isOnline() {
@@ -112,17 +118,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void isOffline() {
                 initDataOffline();
-                Snackbar.make(root, R.string.no_internet,Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(root, R.string.no_internet, Snackbar.LENGTH_SHORT).show();
             }
         };
 
-        receiverInternet = new CheckConnectInternet(checkInternetCallback);
-        requiredPermission = new RequiredPermission(this, mResultLauncher);
-        repository = Repository.getInstance(this);
-
-        requirePermissions();
-        initViews();
-        initListeners();
+        receiverInternet = new ReceiveInternet(checkInternetCallback);
     }
 
     private void initDataOffline() {
@@ -204,11 +204,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void downloadSong(int position) {
-        Song song = mSongs.get(position);
         if (songDownloading.size() >= 5) {
             Toast.makeText(this, "Please waiting 1 minute", Toast.LENGTH_SHORT).show();
             return;
         }
+        Song song = mSongs.get(position);
         File dir;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), NAME_FOLDER);
@@ -217,18 +217,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!dir.exists()) {
-            dir.mkdir();
+            if (!dir.mkdirs()) return;
         }
 
         File file = new File(dir.getAbsolutePath(), song.getTitle().replace(" ", "_") + SUB_FILE);
 
-        song.setLocation(
-                Uri.fromFile(file).toString()
-        );
+        song.setLocation(Uri.fromFile(file).toString());
 
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(song.getLinkSong()))
-                .setTitle(getString(R.string.download_song))
-                .setDescription(song.getTitle())
+                .setTitle(getString(R.string.download_song) + " " + song.getTitle())
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setDestinationUri(Uri.fromFile(file))
                 .setAllowedOverRoaming(true);
@@ -248,12 +245,15 @@ public class MainActivity extends AppCompatActivity {
     private void initData() {
         RemoteCallback getSongVNCallBack = new RemoteCallback() {
             @Override
-            public void onSuccess(Result result) {
+            public void onSuccess(ResultResponse result) {
                 if (result.getMsg().equals(Constant.VALUE_SUCCESS)) {
-                    songFavorite = repository.getSongFavorite();
-                    songDownload = repository.getSongDownload();
-                    mSongs = result.getData().getSongs();
-                    mSongAdapter.updateAdapter(mSongs, songFavorite, songDownload);
+                    if (result.getData().getSongs() != null) {
+                        Log.e("LOI", "onSuccess: " + result.getData().getSongs().size());
+                        songFavorite = repository.getSongFavorite();
+                        songDownload = repository.getSongDownload();
+                        mSongs = result.getData().getSongs();
+                        mSongAdapter.updateAdapter(mSongs, songFavorite, songDownload);
+                    }
                 } else {
                     Toast.makeText(MainActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                 }
@@ -267,8 +267,6 @@ public class MainActivity extends AppCompatActivity {
 
         repository.getSongVN(getSongVNCallBack);
     }
-
-
 
     @Override
     protected void onStart() {

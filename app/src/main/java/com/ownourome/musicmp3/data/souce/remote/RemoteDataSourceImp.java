@@ -2,7 +2,7 @@ package com.ownourome.musicmp3.data.souce.remote;
 
 import androidx.annotation.NonNull;
 
-import com.ownourome.musicmp3.data.network.response.Result;
+import com.ownourome.musicmp3.data.network.response.ResultResponse;
 import com.ownourome.musicmp3.data.network.ApiConfig;
 import com.ownourome.musicmp3.utils.callback.RemoteCallback;
 
@@ -28,20 +28,20 @@ public class RemoteDataSourceImp implements RemoteDataSource {
 
     @Override
     public void getSongVN(RemoteCallback callback) {
-        mApiConfig.getApi().getSongVN().enqueue(new Callback<Result>() {
+        mApiConfig.getApi().getSongVN().enqueue(new Callback<ResultResponse>() {
             @Override
-            public void onResponse(@NonNull Call<Result> call, @NonNull Response<Result> response) {
+            public void onResponse(@NonNull Call<ResultResponse> call, @NonNull Response<ResultResponse> response) {
                 if (response.isSuccessful()) {
-                    Result result = response.body();
-                    if (result != null) {
-                        callback.onSuccess(result);
+                    ResultResponse resultResponse = response.body();
+                    if (resultResponse != null) {
+                        callback.onSuccess(resultResponse);
                     }
                 }
 
             }
 
             @Override
-            public void onFailure(@NonNull Call<Result> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ResultResponse> call, @NonNull Throwable t) {
                 callback.onFailed(t.getMessage());
             }
         });

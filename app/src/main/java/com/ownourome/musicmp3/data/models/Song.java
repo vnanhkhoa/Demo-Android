@@ -5,6 +5,7 @@ import static com.ownourome.musicmp3.utils.Constant.URL_SONG;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
@@ -36,13 +37,22 @@ public class Song {
     @ColumnInfo(name = "duration")
     private int duration;
 
-    @ColumnInfo(name = "isFavorite", defaultValue = "false")
+    @ColumnInfo(name = "isFavorite")
     private boolean isFavorite = false;
 
-    @ColumnInfo(name = "isDownload", defaultValue = "false")
+    @ColumnInfo(name = "isDownload")
     private boolean isDownload = false;
 
     public Song() {
+
+    }
+
+    public Song(String id, String title, String artistsNames, String thumbnail, int duration) {
+        this.id = id;
+        this.title = title;
+        this.artistsNames = artistsNames;
+        this.thumbnail = thumbnail;
+        this.duration = duration;
     }
 
     public Song(@NonNull String id, String title, String artistsNames, String thumbnail, String location, int duration, boolean isFavorite, boolean isDownload) {
@@ -104,7 +114,11 @@ public class Song {
     }
 
     public String getLinkSong() {
-        return URL_SONG.replace(":idSong", this.id);
+        if (!isDownload) {
+            return URL_SONG.replace(":idSong", this.id);
+        } else {
+            return getLocation();
+        }
     }
 
     public String getLocation() {

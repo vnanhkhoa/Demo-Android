@@ -12,11 +12,11 @@ import android.os.Build;
 
 import com.ownourome.musicmp3.utils.callback.CheckInternetCallback;
 
-public class CheckConnectInternet extends BroadcastReceiver {
+public class ReceiveInternet extends BroadcastReceiver {
 
     private final CheckInternetCallback checkInternetCallback;
 
-    public CheckConnectInternet(CheckInternetCallback checkInternetCallback) {
+    public ReceiveInternet(CheckInternetCallback checkInternetCallback) {
         this.checkInternetCallback = checkInternetCallback;
     }
 
