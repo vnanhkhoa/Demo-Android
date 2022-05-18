@@ -14,6 +14,7 @@ public class Song {
 
     @SerializedName("id")
     @PrimaryKey
+    @NonNull
     private String id;
 
     @SerializedName("title")
