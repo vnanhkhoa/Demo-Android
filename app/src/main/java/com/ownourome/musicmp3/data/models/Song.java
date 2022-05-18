@@ -2,34 +2,57 @@ package com.ownourome.musicmp3.data.models;
 
 import static com.ownourome.musicmp3.utils.Constant.URL_SONG;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "song")
 public class Song {
 
     @SerializedName("id")
+    @PrimaryKey
     private String id;
 
     @SerializedName("title")
+    @ColumnInfo(name = "title")
     private String title;
 
     @SerializedName("artists_names")
+    @ColumnInfo(name = "artists_names")
     private String artistsNames;
 
     @SerializedName("thumbnail")
+    @ColumnInfo(name = "thumbnail")
     private String thumbnail;
 
+    @ColumnInfo(name = "location")
+    private String location;
+
     @SerializedName("duration")
+    @ColumnInfo(name = "duration")
     private int duration;
+
+    @ColumnInfo(name = "isFavorite", defaultValue = "false")
+    private boolean isFavorite = false;
+
+    @ColumnInfo(name = "isDownload", defaultValue = "false")
+    private boolean isDownload = false;
 
     public Song() {
     }
 
-    public Song(String id, String title, String artistsNames, String thumbnail, int duration) {
+    public Song(@NonNull String id, String title, String artistsNames, String thumbnail, String location, int duration, boolean isFavorite, boolean isDownload) {
         this.id = id;
         this.title = title;
         this.artistsNames = artistsNames;
         this.thumbnail = thumbnail;
+        this.location = location;
         this.duration = duration;
+        this.isFavorite = isFavorite;
+        this.isDownload = isDownload;
     }
 
     public String getDurationString() {
@@ -38,12 +61,12 @@ public class Song {
         return minus+":"+second;
     }
 
-
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -81,5 +104,29 @@ public class Song {
 
     public String getLinkSong() {
         return URL_SONG.replace(":idSong", this.id);
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public boolean isDownload() {
+        return isDownload;
+    }
+
+    public void setDownload(boolean download) {
+        isDownload = download;
     }
 }

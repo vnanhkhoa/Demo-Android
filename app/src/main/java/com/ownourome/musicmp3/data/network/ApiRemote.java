@@ -1,8 +1,7 @@
 package com.ownourome.musicmp3.data.network;
 
-import com.ownourome.musicmp3.data.models.Result;
+import com.ownourome.musicmp3.data.network.response.Result;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 

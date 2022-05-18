@@ -18,7 +18,7 @@ public class ApiConfig {
     private static ApiConfig INSTANCE;
     private final ApiRemote api;
 
-    private ApiConfig(String... baseUrl) {
+    private ApiConfig() {
         Gson gson = new GsonBuilder().create();
 
         HttpLoggingInterceptor logger = new HttpLoggingInterceptor();
@@ -36,7 +36,7 @@ public class ApiConfig {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(baseUrl[0])
+                .baseUrl(Constant.URL_BASE)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
@@ -44,13 +44,9 @@ public class ApiConfig {
         api = retrofit.create(ApiRemote.class);
     }
 
-    public static ApiConfig getInstance(String... baseUrl) {
+    public static ApiConfig getInstance() {
         if (INSTANCE == null) {
-            if (baseUrl.length == 0) {
-                INSTANCE = new ApiConfig(Constant.URL_BASE);
-            } else {
-                INSTANCE = new ApiConfig(baseUrl);
-            }
+            INSTANCE = new ApiConfig();
         }
         return INSTANCE;
     }

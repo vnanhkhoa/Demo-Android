@@ -1,8 +1,8 @@
-package com.ownourome.musicmp3.data.remote;
+package com.ownourome.musicmp3.data.souce.remote;
 
 import androidx.annotation.NonNull;
 
-import com.ownourome.musicmp3.data.models.Result;
+import com.ownourome.musicmp3.data.network.response.Result;
 import com.ownourome.musicmp3.data.network.ApiConfig;
 import com.ownourome.musicmp3.utils.callback.RemoteCallback;
 
@@ -10,19 +10,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ApiRepositoryImp implements ApiRepository {
+public class RemoteDataSourceImp implements RemoteDataSource {
 
-    private static ApiRepositoryImp INSTANCE = null;
+    private static RemoteDataSourceImp INSTANCE = null;
     private final ApiConfig mApiConfig;
 
-    public static ApiRepositoryImp getInstance() {
+    public static RemoteDataSourceImp getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new ApiRepositoryImp();
+            INSTANCE = new RemoteDataSourceImp();
         }
         return INSTANCE;
     }
 
-    public ApiRepositoryImp() {
+    public RemoteDataSourceImp() {
         this.mApiConfig = ApiConfig.getInstance();
     }
 
@@ -37,6 +37,7 @@ public class ApiRepositoryImp implements ApiRepository {
                         callback.onSuccess(result);
                     }
                 }
+
             }
 
             @Override

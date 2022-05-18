@@ -1,7 +1,7 @@
-package com.ownourome.musicmp3.data.remote;
+package com.ownourome.musicmp3.data.souce.remote;
 
 import com.ownourome.musicmp3.utils.callback.RemoteCallback;
 
-public interface ApiRepository {
+public interface RemoteDataSource {
     void getSongVN(RemoteCallback callback);
 }

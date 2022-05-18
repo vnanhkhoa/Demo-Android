@@ -1,4 +1,4 @@
-package com.ownourome.musicmp3.data.models;
+package com.ownourome.musicmp3.data.network.response;
 
 import com.google.gson.annotations.SerializedName;
 

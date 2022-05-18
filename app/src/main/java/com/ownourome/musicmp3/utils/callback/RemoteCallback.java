@@ -1,6 +1,6 @@
 package com.ownourome.musicmp3.utils.callback;
 
-import com.ownourome.musicmp3.data.models.Result;
+import com.ownourome.musicmp3.data.network.response.Result;
 
 public interface RemoteCallback {
     void onSuccess(Result result);
