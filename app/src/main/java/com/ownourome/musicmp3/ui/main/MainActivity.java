@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -186,9 +187,10 @@ public class MainActivity extends AppCompatActivity {
                         || requiredPermission.isPermissioned(WRITE_STORAGE)) {
                     requiredPermission.requestPermission(PERMISSIONS_MAIN);
                 } else {
-                    downloadSong(position);
+                    Log.e("LOI", "imgBtnDownloadClick: "+position);
+                    imgBtnDownload.setEnabled(false);
                     imgBtnDownload.setColorFilter(getResources().getColor(R.color.favorite));
-                    imgBtnDownload.setEnabled(true);
+                    downloadSong(position);
                 }
             }
         };
