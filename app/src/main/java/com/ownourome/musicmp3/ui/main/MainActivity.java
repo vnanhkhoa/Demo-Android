@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!dir.exists()) {
-            boolean mkdir = dir.mkdir();
+            dir.mkdir();
         }
 
         File file = new File(dir.getAbsolutePath(), song.getTitle().replace(" ", "_") + SUB_FILE);
