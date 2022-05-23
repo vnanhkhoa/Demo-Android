@@ -59,6 +59,7 @@ import me.relex.circleindicator.CircleIndicator3;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private final int MIN_PROGRESS = 0;
     public static Song mSong;
     private final Handler mHandler = new Handler();
     private int duration;
@@ -141,7 +142,6 @@ public class DetailActivity extends AppCompatActivity {
             mProgressDownload.setProgress(MAX_PROGRESS);
         } else {
             mImgBtnDownload.setEnabled(true);
-            int MIN_PROGRESS = 0;
             mProgressDownload.setProgress(MIN_PROGRESS);
         }
     }
@@ -228,6 +228,7 @@ public class DetailActivity extends AppCompatActivity {
         }
         Toast.makeText(DetailActivity.this, "Download Success", Toast.LENGTH_SHORT).show();
     }
+
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, @NonNull Intent intent) {
@@ -248,7 +249,7 @@ public class DetailActivity extends AppCompatActivity {
                     unbindService(mServiceConnection);
                     isConnect = false;
                     mHandler.removeCallbacks(mRunnable);
-                    mSeekBarSong.setProgress(0);
+                    mSeekBarSong.setProgress(MIN_PROGRESS);
                     mImgBtnPlay.setImageResource(R.drawable.ic_round_play_arrow_24);
                     mTvDurationStart.setText(TIME_START);
                     connectBoundService();
@@ -411,6 +412,14 @@ public class DetailActivity extends AppCompatActivity {
             updateInforSong();
             if (mPlaySongService.isPlaying()) {
                 updateDuration();
+            } else {
+                if (mPlaySongService.getDurationCurrent() != 0) {
+                    mSeekBarSong.setProgress(getPercent());
+                    mTvDurationStart.setText(mSong.getDurationString(mPlaySongService.getDurationCurrent()));
+                } else {
+                    mSeekBarSong.setProgress(MIN_PROGRESS);
+                    mTvDurationStart.setText(TIME_START);
+                }
             }
         }
 

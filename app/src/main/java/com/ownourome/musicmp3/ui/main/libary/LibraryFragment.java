@@ -9,6 +9,7 @@ import static com.ownourome.musicmp3.utils.Constant.SONG_LIST;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -36,6 +37,7 @@ public class LibraryFragment extends Fragment {
     private ArrayList<Song> mSongs;
     private SongItemClick mSongItemClick;
     private Repository mRepository;
+    private SongAdapter mSongAdapter;
     private Gson mGson;
 
     public LibraryFragment() {
@@ -109,15 +111,15 @@ public class LibraryFragment extends Fragment {
         RecyclerView mRecyclerViewLocal = view.findViewById(R.id.recyclerViewLocal);
 
         mRecyclerViewLocal.setLayoutManager(new LinearLayoutManager(requireContext()));
-        SongAdapter mSongAdapter = new SongAdapter(requireContext(), mSongs, mSongItemClick);
+        mSongAdapter = new SongAdapter(requireContext(), mSongs, mSongItemClick);
         mRecyclerViewLocal.setAdapter(mSongAdapter);
 
+    }
+
+    public void reloadPage() {
+        Log.e("LOI", "reloadPage: ");
+        mSongs = (ArrayList<Song>) mRepository.getAllSongDownload();
         mSongAdapter.updateAdapter(mSongs);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
 }

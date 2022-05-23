@@ -52,15 +52,17 @@ public class MainActivity extends AppCompatActivity {
 
     public static List<String> sSongFavorite;
     public static List<String> sSongDownload;
-    public LinearLayout sLnPlay;
-    public TextView sTvTitle;
-    public TextView sTvArtist;
-    public ImageView sImgThumbnail;
-    private ImageButton sImgBtnPlay;
+    private static int pageCurrent = 0;
+
+    private LinearLayout mLnPlay;
+    private TextView mTvTitle;
+    private TextView mTvArtist;
+    private ImageView mImgThumbnail;
+    private ImageButton mImgBtnPlay;
     public Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            sImgThumbnail.animate().rotationBy(360).withEndAction(this).setDuration(TIME_DELAY)
+            mImgThumbnail.animate().rotationBy(360).withEndAction(this).setDuration(TIME_DELAY)
                     .setInterpolator(new LinearInterpolator()).start();
         }
     };
@@ -92,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             isConnect = true;
 
             if (mPlaySongService.isPlaying()) {
-                sLnPlay.setVisibility(View.VISIBLE);
+                mLnPlay.setVisibility(View.VISIBLE);
                 setSongPlaying(mPlaySongService.getSong());
             }
         }
@@ -108,11 +110,11 @@ public class MainActivity extends AppCompatActivity {
             int action = intent.getIntExtra(ACTION_PLAY, 0);
             switch (action) {
                 case PLAY:
-                    sImgBtnPlay.setImageResource(R.drawable.ic_round_pause_24);
+                    mImgBtnPlay.setImageResource(R.drawable.ic_round_pause_24);
                     startAnimate();
                     break;
                 case PAUSE:
-                    sImgBtnPlay.setImageResource(R.drawable.ic_round_play_arrow_24);
+                    mImgBtnPlay.setImageResource(R.drawable.ic_round_play_arrow_24);
                     stopAnimate();
                     break;
                 case NEXT:
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     unbindService(mServiceConnection);
                     isConnect = false;
                     stopAnimate();
-                    sImgBtnPlay.setImageResource(R.drawable.ic_round_play_arrow_24);
+                    mImgBtnPlay.setImageResource(R.drawable.ic_round_play_arrow_24);
                     connectBoundService();
                     break;
                 case START_ANIMATE:
@@ -135,24 +137,35 @@ public class MainActivity extends AppCompatActivity {
 
     public void setSongPlaying(Song song) {
         if (song == null) return;
-        sLnPlay.setVisibility(View.VISIBLE);
-        sTvTitle.setText(song.getTitle());
-        sTvArtist.setText(song.getArtistsNames());
-        Glide.with(sLnPlay.getContext())
+        mLnPlay.setVisibility(View.VISIBLE);
+        mTvTitle.setText(song.getTitle());
+        mTvArtist.setText(song.getArtistsNames());
+        Glide.with(mLnPlay.getContext())
                 .load(song.getThumbnail())
                 .error(R.drawable.ic_round_music_note_24)
-                .into(sImgThumbnail);
-        sImgBtnPlay.setImageResource(R.drawable.ic_round_pause_24);
+                .into(mImgThumbnail);
+        mImgBtnPlay.setImageResource(R.drawable.ic_round_pause_24);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        mRankFragment.updateDataPage();
+        reloadPage();
+    }
+
+    private void reloadPage() {
+        switch (pageCurrent) {
+            case 0:
+                mRankFragment.updateDataPage();
+                break;
+            case 1:
+                mLibraryFragment.reloadPage();
+                break;
+        }
     }
 
     private void startAnimate() {
-        sImgThumbnail
+        mImgThumbnail
                 .animate()
                 .rotationBy(360)
                 .withEndAction(runnable)
@@ -162,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void stopAnimate() {
-        sImgThumbnail.animate().cancel();
+        mImgThumbnail.animate().cancel();
     }
 
     @Override
@@ -192,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
             if (mPlaySongService.isPlaying()) {
                 startAnimate();
             } else {
-                sImgBtnPlay.setImageResource(R.drawable.ic_round_play_arrow_24);
+                mImgBtnPlay.setImageResource(R.drawable.ic_round_play_arrow_24);
             }
         } else {
             connectBoundService();
@@ -201,13 +214,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         mBottomNavigationView = findViewById(R.id.bottomNavigation);
-        sLnPlay = findViewById(R.id.lnPlay);
-        sTvTitle = findViewById(R.id.tvTitle);
-        sTvArtist = findViewById(R.id.tvArtist);
-        sImgBtnPlay = findViewById(R.id.imgBtnPlay);
+        mLnPlay = findViewById(R.id.lnPlay);
+        mTvTitle = findViewById(R.id.tvTitle);
+        mTvArtist = findViewById(R.id.tvArtist);
+        mImgBtnPlay = findViewById(R.id.imgBtnPlay);
         mImgBtnNext = findViewById(R.id.imgBtnNext);
         mImgBtnPrevious = findViewById(R.id.imgBtnPrevious);
-        sImgThumbnail = findViewById(R.id.imgThumbnail);
+        mImgThumbnail = findViewById(R.id.imgThumbnail);
 
     }
 
@@ -244,21 +257,23 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.rank:
                     setFragment(mRankFragment, false);
+                    pageCurrent = 0;
                     return true;
                 case R.id.library:
                     setFragment(mLibraryFragment, false);
+                    pageCurrent = 1;
                     return true;
                 default:
                     return false;
             }
         });
 
-        sImgBtnPlay.setOnClickListener((v) -> handlePlayAndPause());
+        mImgBtnPlay.setOnClickListener((v) -> handlePlayAndPause());
 
         mImgBtnNext.setOnClickListener((v) -> handleNext());
 
         mImgBtnPrevious.setOnClickListener((v) -> handlePrevious());
-        sLnPlay.setOnClickListener(v -> handleClickPlaySong());
+        mLnPlay.setOnClickListener(v -> handleClickPlaySong());
     }
 
     private void handleClickPlaySong() {
@@ -281,11 +296,11 @@ public class MainActivity extends AppCompatActivity {
         if (mPlaySongService.isPlaying()) {
             mPlaySongService.pause();
             stopAnimate();
-            sImgBtnPlay.setImageResource(R.drawable.ic_round_play_arrow_24);
+            mImgBtnPlay.setImageResource(R.drawable.ic_round_play_arrow_24);
         } else {
             mPlaySongService.resume();
             startAnimate();
-            sImgBtnPlay.setImageResource(R.drawable.ic_round_pause_24);
+            mImgBtnPlay.setImageResource(R.drawable.ic_round_pause_24);
         }
     }
 

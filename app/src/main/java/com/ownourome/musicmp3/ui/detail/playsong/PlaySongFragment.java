@@ -20,12 +20,12 @@ import com.ownourome.musicmp3.R;
 public class PlaySongFragment extends Fragment{
 
 
-    public ImageView imgSong;
-    private MaterialCardView cardView;
+    public ImageView mImgSong;
+    private MaterialCardView mCardView;
     public Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            cardView.animate().rotationBy(360).withEndAction(this).setDuration(TIME_DELAY)
+            mCardView.animate().rotationBy(360).withEndAction(this).setDuration(TIME_DELAY)
                     .setInterpolator(new LinearInterpolator()).start();
         }
     };
@@ -53,10 +53,10 @@ public class PlaySongFragment extends Fragment{
     }
 
     private void initView(View view) {
-        imgSong = view.findViewById(R.id.imgSong);
-        cardView = view.findViewById(R.id.cardView);
+        mImgSong = view.findViewById(R.id.imgSong);
+        mCardView = view.findViewById(R.id.cardView);
 
-        cardView.animate().rotationBy(360).withEndAction(runnable).setDuration(TIME_DELAY)
+        mCardView.animate().rotationBy(360).withEndAction(runnable).setDuration(TIME_DELAY)
                 .setInterpolator(new LinearInterpolator()).start();
     }
 
@@ -64,7 +64,7 @@ public class PlaySongFragment extends Fragment{
         Glide.with(requireContext())
                 .load(url)
                 .error(R.drawable.icon)
-                .into(imgSong);
+                .into(mImgSong);
     }
 
 }
