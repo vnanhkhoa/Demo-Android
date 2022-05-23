@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
@@ -60,7 +61,7 @@ import me.relex.circleindicator.CircleIndicator3;
 public class DetailActivity extends AppCompatActivity {
 
     private final int MIN_PROGRESS = 0;
-    public static Song mSong;
+    public Song mSong;
     private final Handler mHandler = new Handler();
     private int duration;
     private ImageButton mImgBtnClose;
@@ -125,10 +126,10 @@ public class DetailActivity extends AppCompatActivity {
         connectBoundService();
     }
 
-
     private void updateDuration() {
         if (!isChange) {
-            mSeekBarSong.setProgress(getPercent());
+            Log.e("LOI", "updateDuration: "+convertSecond() + " / " + (duration / ONE_SECOND));
+            mSeekBarSong.setProgress(convertSecond());
         }
         mTvDurationStart.setText(mSong.getDurationString(mPlaySongService.getDurationCurrent()));
         mHandler.postDelayed(mRunnable, ONE_SECOND);
@@ -146,8 +147,8 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    private int getPercent() {
-        return (int) Math.ceil((mPlaySongService.getDurationCurrent() * 100.0 / duration));
+    private int convertSecond() {
+        return Math.round(mPlaySongService.getDurationCurrent() * 1f / ONE_SECOND);
     }
 
     private void setInforSong() {
@@ -155,6 +156,7 @@ public class DetailActivity extends AppCompatActivity {
         mTvTitle.setText(mSong.getTitle());
         mTvArtist.setText(mSong.getArtistsNames());
         mTvDurationEnd.setText(mSong.getDurationString(duration));
+        mSeekBarSong.setMax(duration / ONE_SECOND);
         if (!mPlaySongService.isPlaying()) {
             mImgBtnPlay.setImageResource(R.drawable.ic_round_play_arrow_24);
         } else {
@@ -184,6 +186,7 @@ public class DetailActivity extends AppCompatActivity {
         mImgBtnFavorite.setOnClickListener(v -> handleFavorite());
         mImgBtnNext.setOnClickListener(v -> handleNext());
         mImgBtnPrevious.setOnClickListener(v -> handlePrevious());
+
         mSeekBarSong.setOnTouchListener((v, event) -> {
             SeekBar seekBar = (SeekBar) v;
 
@@ -192,7 +195,7 @@ public class DetailActivity extends AppCompatActivity {
                     isChange = true;
                     break;
                 case MotionEvent.ACTION_UP:
-                    mPlaySongService.setSeekBarMediaPlayer((int) Math.round(seekBar.getProgress() * duration / 100.0));
+                    mPlaySongService.setSeekBarMediaPlayer(seekBar.getProgress() * ONE_SECOND);
                     isChange = false;
                     break;
             }
@@ -414,7 +417,8 @@ public class DetailActivity extends AppCompatActivity {
                 updateDuration();
             } else {
                 if (mPlaySongService.getDurationCurrent() != 0) {
-                    mSeekBarSong.setProgress(getPercent());
+
+                    mSeekBarSong.setProgress(convertSecond());
                     mTvDurationStart.setText(mSong.getDurationString(mPlaySongService.getDurationCurrent()));
                 } else {
                     mSeekBarSong.setProgress(MIN_PROGRESS);
