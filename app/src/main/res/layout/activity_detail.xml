@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.detail.DetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/p_10"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
+
+        <ImageButton
+            android:id="@+id/imgBtnClose"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_round_keyboard_arrow_down_24"
+            android:background="@color/white"
+            android:layout_gravity="center"
+            android:layout_weight="6"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/p_5"
+                android:text="@string/vietnam" />
+
+            <TextView
+                android:id="@+id/tvArtist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="italic"
+                android:text="@string/vietnam" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/m_30"
+            android:layout_gravity="top"
+            app:ci_drawable="@drawable/circleindicator_round"
+            app:ci_height="@dimen/wh_ci_indicator"
+            app:ci_orientation="horizontal"
+            app:ci_width="@dimen/wh_ci_indicator" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPagerInforSong"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/m_20">
+
+        <SeekBar
+            android:id="@+id/seekBarSong"
+            android:max="100"
+            android:layout_marginVertical="@dimen/p_10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvDurationStart"
+                android:textColor="@color/black"
+                android:textSize="@dimen/ts_14"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tvDurationEnd"
+                android:textColor="@color/black"
+                android:textSize="@dimen/ts_14"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/w_40"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imgBtnPrevious"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                app:tint="@color/black"
+                android:layout_marginHorizontal="@dimen/m_20"
+                android:src="@drawable/ic_round_skip_previous_24"
+                android:background="@color/white"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/imgBtnPlay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_marginHorizontal="@dimen/m_20"
+                android:scaleType="fitCenter"
+                android:layout_weight="1"
+                app:tint="@color/black"
+                android:src="@drawable/ic_round_pause_24"
+                android:background="@color/white"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/imgBtnNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:layout_marginHorizontal="@dimen/m_20"
+                app:tint="@color/black"
+                android:layout_weight="1"
+                android:src="@drawable/ic_round_skip_next_24"
+                android:background="@color/white"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/p_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            tools:ignore="DisableBaselineAlignment">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_marginHorizontal="@dimen/m_20"
+                android:layout_height="match_parent">
+                <ImageButton
+                    android:id="@+id/imgBtnFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/p_5"
+                    app:tint="@color/black"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_round_favorite_24"
+                    android:background="@android:color/transparent"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_marginHorizontal="@dimen/m_20"
+                android:layout_height="wrap_content">
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="UselessParent">
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/progressDownload"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:indicatorSize="@dimen/r_50"
+                        android:progress="80"
+                        android:layout_gravity="center"
+                        android:max="100"
+                        app:trackThickness="5dp"
+                        app:trackColor="#20000000"
+                        app:indicatorColor="@color/color_item" />
+
+                    <ImageButton
+                        android:id="@+id/imgDownload"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_round_download_24"
+                        android:background="@android:color/transparent"
+                        tools:ignore="ContentDescription" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

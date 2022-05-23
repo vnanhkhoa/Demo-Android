@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.rank.RankFragment">
+
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/ic_round_search_24"
+        android:insetTop="@dimen/none"
+        android:insetBottom="@dimen/none"
+        app:cornerRadius="@dimen/r_50dp"
+        android:layout_marginVertical="@dimen/m_20"
+        android:layout_marginHorizontal="@dimen/m_30"
+        android:backgroundTint="@color/white"
+        app:strokeColor="#66BB6A"
+        app:strokeWidth="@dimen/sw_2" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/top_100"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:gravity="center"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutCountry"
+        android:layout_marginTop="@dimen/l_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="#FF7043"
+        app:tabSelectedTextColor="#FF7043">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItemVietNam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vietnam" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItemUsUk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/us_uk" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerCountry"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/none"
+        android:layout_weight="1"
+        tools:ignore="InefficientWeight" />
+</LinearLayout>

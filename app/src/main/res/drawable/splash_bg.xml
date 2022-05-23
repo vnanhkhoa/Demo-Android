@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingStart="@dimen/m_20"
+    android:paddingEnd="@dimen/m_20">
+    <item>
+        <color android:color="@color/white" />
+    </item>
+
+    <item
+        android:drawable="@drawable/icon"
+        android:gravity="center" />
+</layer-list>

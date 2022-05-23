@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".ui.detail.inforsong.InforSongFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="@dimen/wh_120"
+        app:cardElevation="@dimen/m_20"
+        app:cardCornerRadius="@dimen/r_60"
+        android:layout_marginBottom="@dimen/p_10"
+        android:layout_height="@dimen/wh_120">
+
+        <ImageView
+            android:id="@+id/imgSong"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/icon" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        app:cardElevation="@dimen/p_10"
+        android:layout_margin="@dimen/m_20"
+        app:cardCornerRadius="@dimen/m_30"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/m_30"
+            android:paddingVertical="@dimen/m_20"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/p_5"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="@dimen/wh_60"
+                    android:text="@string/title"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_weight="1"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="0dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/vietnam"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/p_5"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="@dimen/wh_60"
+                    android:text="@string/album"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvAlbum"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="0dp"
+                    android:text="@string/vietnam"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/p_5"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="@dimen/wh_60"
+                    android:text="@string/artist"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvArtist"
+                    android:layout_weight="1"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="0dp"
+                    android:text="@string/vietnam"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

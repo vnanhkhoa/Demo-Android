@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+
+    android:layout_height="70dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="@dimen/wh_50"
+        android:layout_height="@dimen/wh_50"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/p_10"
+        app:cardCornerRadius="@dimen/r_25"
+        app:cardElevation="@dimen/p_5">
+
+        <ImageView
+            android:id="@+id/imgThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_round_music_note_24"
+            android:contentDescription="@string/todo" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        tools:ignore="RtlSymmetry">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.Compat.Notification.Title"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/color_item"
+            android:text="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/tvArtist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_item"
+            style="@style/TextAppearance.Compat.Notification.Info"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/app_name"/>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imgBtnPrevious"
+        android:layout_width="@dimen/w_40"
+        android:src="@drawable/ic_round_skip_previous_24"
+        android:background="@android:color/transparent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:tint="@color/color_item"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription,InefficientWeight" />
+
+    <ImageButton
+        android:id="@+id/imgBtnPlay"
+        android:src="@drawable/ic_round_pause_24"
+        android:layout_width="@dimen/w_40"
+        android:background="@android:color/transparent"
+        app:tint="@color/color_item"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:layout_marginHorizontal="@dimen/p_5"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription,InefficientWeight" />
+
+    <ImageButton
+        android:id="@+id/imgBtnNext"
+        android:src="@drawable/ic_round_skip_next_24"
+        android:layout_width="@dimen/w_40"
+        android:background="@android:color/transparent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:tint="@color/color_item"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/p_10"
+        tools:ignore="ContentDescription,InefficientWeight" />
+</LinearLayout>
