@@ -24,11 +24,9 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,7 +39,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ownourome.musicmp3.R;
 import com.ownourome.musicmp3.data.models.Song;
-import com.ownourome.musicmp3.ui.detail.DetailActivity;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -161,7 +158,6 @@ public class PlaySongService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-        Log.e(TAG, "onDestroy: ");
     }
 
     private void setMediaPlayer() {
@@ -207,9 +203,6 @@ public class PlaySongService extends Service {
                         PendingIntent next = setPendingIntent(NEXT);
                         PendingIntent clear = setPendingIntent(CLEAR);
 
-                        PendingIntent intentDetail = intentDetail();
-
-
                         if (isPlaying) {
                             PendingIntent pause = setPendingIntent(PAUSE);
                             builder
@@ -228,7 +221,6 @@ public class PlaySongService extends Service {
                                 .setContentText(song.getArtistsNames())
                                 .setSmallIcon(R.drawable.icon)
                                 .setLargeIcon(resource)
-                                .setContentIntent(intentDetail)
                                 .addAction(R.drawable.ic_round_close_24, getString(R.string.Clear), clear)
                                 .setPriority(NotificationCompat.PRIORITY_MIN)
                                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
@@ -243,17 +235,6 @@ public class PlaySongService extends Service {
                 });
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
-    private PendingIntent intentDetail() {
-        Intent intent = new Intent(PlaySongService.this, DetailActivity.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return PendingIntent.getActivity(
-                    PlaySongService.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        } else {
-            return PendingIntent.getActivity(
-                    PlaySongService.this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        }
-    }
 
     public int getDuration() {
         return duration;

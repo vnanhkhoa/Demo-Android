@@ -52,16 +52,11 @@ public class MainActivity extends AppCompatActivity {
 
     public static List<String> sSongFavorite;
     public static List<String> sSongDownload;
-    @SuppressLint("StaticFieldLeak")
-    public static LinearLayout sLnPlay;
-    @SuppressLint("StaticFieldLeak")
-    public static TextView sTvTitle;
-    @SuppressLint("StaticFieldLeak")
-    public static TextView sTvArtist;
-    @SuppressLint("StaticFieldLeak")
-    public static ImageView sImgThumbnail;
-    @SuppressLint("StaticFieldLeak")
-    private static ImageButton sImgBtnPlay;
+    public LinearLayout sLnPlay;
+    public TextView sTvTitle;
+    public TextView sTvArtist;
+    public ImageView sImgThumbnail;
+    private ImageButton sImgBtnPlay;
     public Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -138,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public static void setSongPlaying(Song song) {
+    public void setSongPlaying(Song song) {
         if (song == null) return;
         sLnPlay.setVisibility(View.VISIBLE);
         sTvTitle.setText(song.getTitle());
@@ -148,6 +143,12 @@ public class MainActivity extends AppCompatActivity {
                 .error(R.drawable.ic_round_music_note_24)
                 .into(sImgThumbnail);
         sImgBtnPlay.setImageResource(R.drawable.ic_round_pause_24);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mRankFragment.updateDataPage();
     }
 
     private void startAnimate() {

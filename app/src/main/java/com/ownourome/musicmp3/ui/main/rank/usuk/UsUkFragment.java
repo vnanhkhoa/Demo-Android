@@ -2,7 +2,6 @@ package com.ownourome.musicmp3.ui.main.rank.usuk;
 
 import static com.ownourome.musicmp3.ui.main.MainActivity.sSongDownload;
 import static com.ownourome.musicmp3.ui.main.MainActivity.sSongFavorite;
-import static com.ownourome.musicmp3.ui.main.MainActivity.setSongPlaying;
 import static com.ownourome.musicmp3.utils.Constant.POSITION;
 import static com.ownourome.musicmp3.utils.Constant.SONG_DATA_EXTRA;
 import static com.ownourome.musicmp3.utils.Constant.SONG_ID;
@@ -10,6 +9,7 @@ import static com.ownourome.musicmp3.utils.Constant.SONG_LIST;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,20 +29,21 @@ import com.ownourome.musicmp3.data.models.Song;
 import com.ownourome.musicmp3.data.network.response.ResultResponse;
 import com.ownourome.musicmp3.data.souce.Repository;
 import com.ownourome.musicmp3.service.PlaySongService;
+import com.ownourome.musicmp3.ui.main.MainActivity;
 import com.ownourome.musicmp3.ui.main.adapter.SongAdapter;
 import com.ownourome.musicmp3.ui.main.callback.SongItemClick;
 import com.ownourome.musicmp3.utils.Constant;
+import com.ownourome.musicmp3.utils.callback.ReloadPage;
 import com.ownourome.musicmp3.utils.callback.RemoteCallback;
 
 import java.util.ArrayList;
 
-public class UsUkFragment extends Fragment{
+public class UsUkFragment extends Fragment implements ReloadPage {
 
     private ArrayList<Song> mSongs;
     private SongAdapter mSongAdapter;
     private SongItemClick mSongItemClick;
     private Repository mRepository;
-    private RemoteCallback mRemoteCallback;
     private ProgressBar mProgressLoading;
     private Gson mGson;
 
@@ -53,7 +54,7 @@ public class UsUkFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        MainActivity mainActivity = (MainActivity) requireActivity();
         mSongs = new ArrayList<>();
         mGson = new Gson();
 
@@ -69,7 +70,7 @@ public class UsUkFragment extends Fragment{
                 intent.putExtra(SONG_DATA_EXTRA, bundle);
                 requireActivity().startService(intent);
 
-                setSongPlaying(mSongs.get(position));
+                mainActivity.setSongPlaying(mSongs.get(position));
             }
 
             @Override
@@ -78,7 +79,7 @@ public class UsUkFragment extends Fragment{
             }
         };
 
-        mRemoteCallback = new RemoteCallback() {
+        RemoteCallback mRemoteCallback = new RemoteCallback() {
             @Override
             public void onSuccess(ResultResponse resultResponse) {
                 if (resultResponse.getMsg().equals(Constant.VALUE_SUCCESS)) {
@@ -95,11 +96,11 @@ public class UsUkFragment extends Fragment{
             @Override
             public void onFailed(String messenger) {
                 Toast.makeText(requireContext(), messenger, Toast.LENGTH_SHORT).show();
-
             }
         };
 
         mRepository = Repository.getInstance(requireContext());
+        mRepository.getSongUSUK(mRemoteCallback);
     }
 
     private void handleFavorite(Song song) {
@@ -125,7 +126,6 @@ public class UsUkFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_us_uk, container, false);
     }
 
@@ -142,6 +142,7 @@ public class UsUkFragment extends Fragment{
         Circle circle = new Circle();
         circle.setColor(getResources().getColor(R.color.color_item));
         mProgressLoading.setIndeterminateDrawable(circle);
+        mProgressLoading.setVisibility(View.VISIBLE);
 
         recyclerViewUSUK.setLayoutManager(new LinearLayoutManager(requireContext()));
         mSongAdapter = new SongAdapter(requireContext(), mSongs, mSongItemClick);
@@ -151,8 +152,10 @@ public class UsUkFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        mProgressLoading.setVisibility(View.VISIBLE);
-        mRepository.getSongUSUK(mRemoteCallback);
     }
 
+    @Override
+    public void updateData() {
+        mSongAdapter.updateAdapter(mSongs);
+    }
 }

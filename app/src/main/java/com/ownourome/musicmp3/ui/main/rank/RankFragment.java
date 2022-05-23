@@ -16,18 +16,18 @@ import com.ownourome.musicmp3.R;
 import com.ownourome.musicmp3.ui.adapter.PageFragmentAdapter;
 import com.ownourome.musicmp3.ui.main.rank.usuk.UsUkFragment;
 import com.ownourome.musicmp3.ui.main.rank.vietnam.VietNamFragment;
+import com.ownourome.musicmp3.utils.callback.ReloadPage;
 
 import java.util.ArrayList;
 
 public class RankFragment extends Fragment {
 
-    private static int page = -1;
+    private static int pageCurrent = -1;
 
     @SuppressLint("StaticFieldLeak")
     private TabLayout mTabLayoutCountry;
     private ViewPager2 mViewPagerCountry;
     private ArrayList<Fragment> mFragments;
-
 
     public RankFragment() {
 
@@ -59,7 +59,7 @@ public class RankFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPagerCountry.setCurrentItem(tab.getPosition());
-                page = mViewPagerCountry.getCurrentItem();
+                pageCurrent = mViewPagerCountry.getCurrentItem();
             }
 
             @Override
@@ -78,7 +78,7 @@ public class RankFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 mTabLayoutCountry.selectTab(mTabLayoutCountry.getTabAt(position));
-                page = position;
+                pageCurrent = position;
             }
         });
     }
@@ -87,11 +87,18 @@ public class RankFragment extends Fragment {
 //        Button mBtnSearch = view.findViewById(R.id.btnSearch);
         mTabLayoutCountry = view.findViewById(R.id.tabLayoutCountry);
         mViewPagerCountry = view.findViewById(R.id.viewPagerCountry);
-        if (page != -1) {
-            mFragments.get(page).onResume();
-        }
+
+        updateDataPage();
+
         PageFragmentAdapter mPageFragmentAdapter = new PageFragmentAdapter(requireActivity(), mFragments);
         mViewPagerCountry.setAdapter(mPageFragmentAdapter);
-        page = mViewPagerCountry.getCurrentItem();
+        pageCurrent = mViewPagerCountry.getCurrentItem();
+    }
+
+    public void updateDataPage() {
+        if (pageCurrent != -1) {
+            ReloadPage mReloadPage = (ReloadPage) mFragments.get(pageCurrent);
+            mReloadPage.updateData();
+        }
     }
 }

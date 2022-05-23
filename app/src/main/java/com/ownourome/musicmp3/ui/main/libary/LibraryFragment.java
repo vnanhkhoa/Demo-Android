@@ -2,7 +2,6 @@ package com.ownourome.musicmp3.ui.main.libary;
 
 import static com.ownourome.musicmp3.ui.main.MainActivity.sSongDownload;
 import static com.ownourome.musicmp3.ui.main.MainActivity.sSongFavorite;
-import static com.ownourome.musicmp3.ui.main.MainActivity.setSongPlaying;
 import static com.ownourome.musicmp3.utils.Constant.POSITION;
 import static com.ownourome.musicmp3.utils.Constant.SONG_DATA_EXTRA;
 import static com.ownourome.musicmp3.utils.Constant.SONG_ID;
@@ -12,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -25,6 +25,7 @@ import com.ownourome.musicmp3.R;
 import com.ownourome.musicmp3.data.models.Song;
 import com.ownourome.musicmp3.data.souce.Repository;
 import com.ownourome.musicmp3.service.PlaySongService;
+import com.ownourome.musicmp3.ui.main.MainActivity;
 import com.ownourome.musicmp3.ui.main.adapter.SongAdapter;
 import com.ownourome.musicmp3.ui.main.callback.SongItemClick;
 
@@ -35,7 +36,6 @@ public class LibraryFragment extends Fragment {
     private ArrayList<Song> mSongs;
     private SongItemClick mSongItemClick;
     private Repository mRepository;
-    private SongAdapter mSongAdapter;
     private Gson mGson;
 
     public LibraryFragment() {
@@ -44,7 +44,7 @@ public class LibraryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        MainActivity mainActivity = (MainActivity) requireActivity();
         mSongs = new ArrayList<>();
         mGson = new Gson();
 
@@ -60,7 +60,7 @@ public class LibraryFragment extends Fragment {
                 intent.putExtra(SONG_DATA_EXTRA,bundle);
                 requireActivity().startService(intent);
 
-                setSongPlaying(mSongs.get(position));
+                mainActivity.setSongPlaying(mSongs.get(position));
             }
 
             @Override
@@ -70,6 +70,7 @@ public class LibraryFragment extends Fragment {
         };
 
         mRepository = Repository.getInstance(requireContext());
+        mSongs = (ArrayList<Song>) mRepository.getAllSongDownload();
     }
 
     private void handleFavorite(Song song) {
@@ -108,16 +109,15 @@ public class LibraryFragment extends Fragment {
         RecyclerView mRecyclerViewLocal = view.findViewById(R.id.recyclerViewLocal);
 
         mRecyclerViewLocal.setLayoutManager(new LinearLayoutManager(requireContext()));
-        mSongAdapter = new SongAdapter(requireContext(), mSongs, mSongItemClick);
+        SongAdapter mSongAdapter = new SongAdapter(requireContext(), mSongs, mSongItemClick);
         mRecyclerViewLocal.setAdapter(mSongAdapter);
+
+        mSongAdapter.updateAdapter(mSongs);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        mSongs = (ArrayList<Song>) mRepository.getAllSongDownload();
-        mSongAdapter.updateAdapter(mSongs);
 
     }
 }

@@ -32,7 +32,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
@@ -45,7 +44,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.google.gson.Gson;
 import com.ownourome.musicmp3.R;
 import com.ownourome.musicmp3.data.models.Song;
 import com.ownourome.musicmp3.data.souce.Repository;
@@ -142,6 +140,7 @@ public class DetailActivity extends AppCompatActivity {
             int MAX_PROGRESS = 100;
             mProgressDownload.setProgress(MAX_PROGRESS);
         } else {
+            mImgBtnDownload.setEnabled(true);
             int MIN_PROGRESS = 0;
             mProgressDownload.setProgress(MIN_PROGRESS);
         }
@@ -225,7 +224,6 @@ public class DetailActivity extends AppCompatActivity {
         if (sSongFavorite.contains(mSong.getId())) {
             mRepository.updateSong(mSong);
         } else {
-            Log.e("LOI", "handleDownloadSuccess: "+new Gson().toJson(mSong));
             mRepository.insertSong(mSong);
         }
         Toast.makeText(DetailActivity.this, "Download Success", Toast.LENGTH_SHORT).show();
@@ -244,11 +242,7 @@ public class DetailActivity extends AppCompatActivity {
                 case NEXT:
                 case PREVIOUS:
                     mHandler.removeCallbacks(mRunnable);
-                    mSong = mPlaySongService.getSong();
-                    setInforSong();
-                    updateDuration();
-                    inforSongFragment.setInForSong();
-                    playSongFragment.setImgSong();
+                    handleChangeSong();
                     break;
                 case CLEAR:
                     unbindService(mServiceConnection);
@@ -297,21 +291,25 @@ public class DetailActivity extends AppCompatActivity {
     private void handlePrevious() {
         if (!isConnect) return;
         mPlaySongService.handlePrevious();
-        mSong = mPlaySongService.getSong();
-        setInforSong();
-        inforSongFragment.setInForSong();
-        playSongFragment.setImgSong();
-        updateDuration();
+        handleChangeSong();
     }
 
     private void handleNext() {
         if (!isConnect) return;
         mPlaySongService.handleNext();
+        handleChangeSong();
+    }
+
+    private void handleChangeSong() {
         mSong = mPlaySongService.getSong();
         setInforSong();
-        inforSongFragment.setInForSong();
-        playSongFragment.setImgSong();
         updateDuration();
+        updateInforSong();
+    }
+
+    private void updateInforSong() {
+        inforSongFragment.setInForSong(mSong);
+        playSongFragment.setImgSong(mSong.getThumbnail());
     }
 
     private void handleFavorite() {
@@ -398,9 +396,6 @@ public class DetailActivity extends AppCompatActivity {
         mHandler.removeCallbacks(mRunnable);
     }
 
-
-
-
     private final Runnable mRunnable = this::updateDuration;
 
 
@@ -413,6 +408,7 @@ public class DetailActivity extends AppCompatActivity {
 
             mSong = mPlaySongService.getSong();
             setInforSong();
+            updateInforSong();
             if (mPlaySongService.isPlaying()) {
                 updateDuration();
             }

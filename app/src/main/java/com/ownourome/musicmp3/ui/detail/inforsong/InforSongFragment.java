@@ -1,14 +1,10 @@
 package com.ownourome.musicmp3.ui.detail.inforsong;
 
-import static com.ownourome.musicmp3.ui.detail.DetailActivity.mSong;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.ownourome.musicmp3.R;
+import com.ownourome.musicmp3.data.models.Song;
 
 public class InforSongFragment extends Fragment {
 
@@ -52,23 +49,22 @@ public class InforSongFragment extends Fragment {
         tvTitle = view.findViewById(R.id.tvTitle);
         tvAlbum = view.findViewById(R.id.tvAlbum);
         tvArtist = view.findViewById(R.id.tvArtist);
-        Log.e("LOI", "initViews: ");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        setInForSong();
+
     }
 
-    public void setInForSong() {
+    public void setInForSong(Song song) {
         Glide.with(requireContext())
-                .load(mSong.getThumbnail())
+                .load(song.getThumbnail())
                 .error(R.drawable.icon)
                 .into(imgSong);
 
-        tvTitle.setText(mSong.getTitle());
-        tvAlbum.setText(mSong.getTitleAlbum());
-        tvArtist.setText(mSong.getArtistsNames());
+        tvTitle.setText(song.getTitle());
+        tvAlbum.setText(song.getTitleAlbum());
+        tvArtist.setText(song.getArtistsNames());
     }
 }

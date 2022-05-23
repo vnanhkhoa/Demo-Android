@@ -2,7 +2,6 @@ package com.ownourome.musicmp3.ui.main.rank.vietnam;
 
 import static com.ownourome.musicmp3.ui.main.MainActivity.sSongDownload;
 import static com.ownourome.musicmp3.ui.main.MainActivity.sSongFavorite;
-import static com.ownourome.musicmp3.ui.main.MainActivity.setSongPlaying;
 import static com.ownourome.musicmp3.utils.Constant.POSITION;
 import static com.ownourome.musicmp3.utils.Constant.SONG_DATA_EXTRA;
 import static com.ownourome.musicmp3.utils.Constant.SONG_ID;
@@ -29,22 +28,24 @@ import com.ownourome.musicmp3.data.models.Song;
 import com.ownourome.musicmp3.data.network.response.ResultResponse;
 import com.ownourome.musicmp3.data.souce.Repository;
 import com.ownourome.musicmp3.service.PlaySongService;
+import com.ownourome.musicmp3.ui.main.MainActivity;
 import com.ownourome.musicmp3.ui.main.adapter.SongAdapter;
 import com.ownourome.musicmp3.ui.main.callback.SongItemClick;
 import com.ownourome.musicmp3.utils.Constant;
+import com.ownourome.musicmp3.utils.callback.ReloadPage;
 import com.ownourome.musicmp3.utils.callback.RemoteCallback;
 
 import java.util.ArrayList;
 
-public class VietNamFragment extends Fragment{
+public class VietNamFragment extends Fragment implements ReloadPage {
 
     private ArrayList<Song> mSongs;
     private SongAdapter mSongAdapter;
     private SongItemClick mSongItemClick;
     private Repository mRepository;
-    private RemoteCallback mRemoteCallback;
     private ProgressBar mProgressLoading;
     private Gson mGson;
+
 
     public VietNamFragment() {
         // Required empty public constructor
@@ -53,7 +54,7 @@ public class VietNamFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        MainActivity mainActivity = (MainActivity) requireActivity();
         mSongs = new ArrayList<>();
         mGson = new Gson();
 
@@ -69,7 +70,7 @@ public class VietNamFragment extends Fragment{
                 intent.putExtra(SONG_DATA_EXTRA,bundle);
                 requireActivity().startService(intent);
 
-                setSongPlaying(mSongs.get(position));
+                mainActivity.setSongPlaying(mSongs.get(position));
             }
 
             @Override
@@ -78,7 +79,7 @@ public class VietNamFragment extends Fragment{
             }
         };
 
-         mRemoteCallback = new RemoteCallback() {
+        RemoteCallback mRemoteCallback = new RemoteCallback() {
             @Override
             public void onSuccess(ResultResponse resultResponse) {
                 if (resultResponse.getMsg().equals(Constant.VALUE_SUCCESS)) {
@@ -100,6 +101,7 @@ public class VietNamFragment extends Fragment{
         };
 
         mRepository = Repository.getInstance(requireContext());
+        mRepository.getSongVN(mRemoteCallback);
     }
 
     private void handleFavorite(Song song) {
@@ -142,6 +144,7 @@ public class VietNamFragment extends Fragment{
         Circle circle = new Circle();
         circle.setColor(getResources().getColor(R.color.color_item));
         mProgressLoading.setIndeterminateDrawable(circle);
+        mProgressLoading.setVisibility(View.VISIBLE);
 
         mRecyclerViewVN.setLayoutManager(new LinearLayoutManager(requireContext()));
         mSongAdapter = new SongAdapter(requireContext(), mSongs, mSongItemClick);
@@ -151,8 +154,10 @@ public class VietNamFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        mProgressLoading.setVisibility(View.VISIBLE);
-        mRepository.getSongVN(mRemoteCallback);
     }
 
+    @Override
+    public void updateData() {
+        mSongAdapter.updateAdapter(mSongs);
+    }
 }

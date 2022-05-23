@@ -1,24 +1,23 @@
 package com.ownourome.musicmp3.ui.detail.playsong;
 
-import static com.ownourome.musicmp3.ui.detail.DetailActivity.mSong;
 import static com.ownourome.musicmp3.utils.Constant.TIME_DELAY;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 import com.ownourome.musicmp3.R;
-public class PlaySongFragment extends Fragment {
+
+public class PlaySongFragment extends Fragment{
 
 
     public ImageView imgSong;
@@ -61,16 +60,11 @@ public class PlaySongFragment extends Fragment {
                 .setInterpolator(new LinearInterpolator()).start();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        setImgSong();
-    }
-
-    public void setImgSong() {
+    public void setImgSong(String url) {
         Glide.with(requireContext())
-                .load(mSong.getThumbnail())
+                .load(url)
                 .error(R.drawable.icon)
                 .into(imgSong);
     }
+
 }
