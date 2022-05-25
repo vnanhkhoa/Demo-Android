@@ -6,13 +6,13 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
+import android.view.View;
 
 public class MyApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
-
         createNotificationChannel();
 
     }

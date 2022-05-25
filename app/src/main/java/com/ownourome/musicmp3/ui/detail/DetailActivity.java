@@ -128,7 +128,6 @@ public class DetailActivity extends AppCompatActivity {
 
     private void updateDuration() {
         if (!isChange) {
-            Log.e("LOI", "updateDuration: "+convertSecond() + " / " + (duration / ONE_SECOND));
             mSeekBarSong.setProgress(convertSecond());
         }
         mTvDurationStart.setText(mSong.getDurationString(mPlaySongService.getDurationCurrent()));

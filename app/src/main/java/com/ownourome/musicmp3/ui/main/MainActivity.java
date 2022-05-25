@@ -22,6 +22,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
@@ -161,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 mLibraryFragment.reloadPage();
                 break;
+            default:
+                break;
         }
     }
 
@@ -182,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         sRequiredPermission = new RequiredPermission(this, mResultLauncher);
         mRepository = Repository.getInstance(this);
 
@@ -266,6 +270,8 @@ public class MainActivity extends AppCompatActivity {
                 default:
                     return false;
             }
+
+
         });
 
         mImgBtnPlay.setOnClickListener((v) -> handlePlayAndPause());

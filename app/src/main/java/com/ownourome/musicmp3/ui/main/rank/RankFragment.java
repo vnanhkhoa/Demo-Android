@@ -2,6 +2,7 @@ package com.ownourome.musicmp3.ui.main.rank;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 
 public class RankFragment extends Fragment {
 
-    private static int pageCurrent = -1;
+    private int pageCurrent = -1;
 
     @SuppressLint("StaticFieldLeak")
     private TabLayout mTabLayoutCountry;

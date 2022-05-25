@@ -1,19 +1,10 @@
 package com.ownourome.musicmp3.data.souce.remote;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import androidx.annotation.NonNull;
 
 import com.ownourome.musicmp3.data.network.NetworkConfig;
 import com.ownourome.musicmp3.data.network.response.ResultResponse;
 import com.ownourome.musicmp3.utils.callback.RemoteCallback;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,7 +49,7 @@ public class RemoteDataSourceImp implements RemoteDataSource {
     public void getSongUSUK(RemoteCallback callback) {
         mNetWorkConfig.getApi().getSongUSUK().enqueue(new Callback<ResultResponse>() {
             @Override
-            public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+            public void onResponse(@NonNull Call<ResultResponse> call, @NonNull Response<ResultResponse> response) {
                 if (response.isSuccessful()) {
                     ResultResponse resultResponse = response.body();
                     if (resultResponse != null) {
@@ -68,7 +59,7 @@ public class RemoteDataSourceImp implements RemoteDataSource {
             }
 
             @Override
-            public void onFailure(Call<ResultResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResultResponse> call, @NonNull Throwable t) {
                 callback.onFailed(t.getMessage());
             }
         });
