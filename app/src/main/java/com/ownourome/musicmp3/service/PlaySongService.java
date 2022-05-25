@@ -20,13 +20,17 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
+import android.media.MediaMetadata;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -189,8 +193,18 @@ public class PlaySongService extends Service {
     }
 
     private void sendNotification() {
+
         MediaSessionCompat mediaSessionCompat = new MediaSessionCompat(this, TAG);
+        mediaSessionCompat.setActive(true);
+        mediaSessionCompat.setMetadata(
+                new MediaMetadataCompat.Builder()
+                        .putString(MediaMetadata.METADATA_KEY_TITLE, song.getTitle())
+                        .putString(MediaMetadata.METADATA_KEY_ARTIST, song.getArtistsNames())
+                        .build()
+        );
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+
 
         Glide.with(this)
                 .asBitmap()
@@ -198,7 +212,6 @@ public class PlaySongService extends Service {
                 .into(new CustomTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-
                         PendingIntent previous = setPendingIntent(PREVIOUS);
                         PendingIntent next = setPendingIntent(NEXT);
                         PendingIntent clear = setPendingIntent(CLEAR);
@@ -217,12 +230,13 @@ public class PlaySongService extends Service {
                                     .addAction(R.drawable.ic_round_skip_next_24, getString(R.string.Next), next);
                         }
 
-                        builder.setContentTitle(song.getTitle())
+                        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                                .setSmallIcon(R.drawable.ic_round_music_note_24)
+                                .setContentTitle(song.getTitle())
                                 .setContentText(song.getArtistsNames())
-                                .setSmallIcon(R.drawable.icon)
                                 .setLargeIcon(resource)
                                 .addAction(R.drawable.ic_round_close_24, getString(R.string.Clear), clear)
-                                .setPriority(NotificationCompat.PRIORITY_MIN)
+                                .setPriority(NotificationCompat.PRIORITY_LOW)
                                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                                         .setShowActionsInCompactView(0, 1, 2)
                                         .setMediaSession(mediaSessionCompat.getSessionToken()));
@@ -233,6 +247,7 @@ public class PlaySongService extends Service {
                     public void onLoadCleared(@Nullable Drawable placeholder) {
                     }
                 });
+
     }
 
 

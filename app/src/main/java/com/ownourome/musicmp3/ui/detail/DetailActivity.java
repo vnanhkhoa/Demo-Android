@@ -32,7 +32,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
